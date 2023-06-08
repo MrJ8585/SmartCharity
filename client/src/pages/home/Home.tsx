@@ -13,6 +13,8 @@ import {
   VStack,
   useColorModeValue,
 } from "@chakra-ui/react";
+import whiteLogo from "../../assets/images/logoBlack.png";
+import blueLogo from "../../assets/images/logoBlue.png";
 
 type FeatureProps = {
   imageSrc: string;
@@ -101,17 +103,15 @@ const organizations = [
 ];
 
 function Home() {
+  //zod
   const bgColor = useColorModeValue("#37a0ea", "#117bc4");
   const bg = useColorModeValue("white", "#2d3748");
+  const img = useColorModeValue(whiteLogo, blueLogo);
 
   return (
     <Container w="90%" maxW="container.xl">
-      <Flex alignItems="center" justifyContent="center">
-        <Image
-          src="https://i.imgur.com/LcrmL8F.png"
-          fit="cover"
-          boxSize="500px"
-        />
+      <Flex alignItems="center" justifyContent="center" padding="4em" gap="4em">
+        <Image src={img} fit="cover" boxSize="-moz-fit-content" width="260px" />
         <Stack w="400px">
           <Text fontSize="4xl" align="center" fontWeight="bold">
             Your charity is safe with SmartCharity
