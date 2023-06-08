@@ -25,8 +25,7 @@ To verify that your FT is upload correctly, go to “messages” and look for a 
 
 The db currently only includes two tables. We only make inserts into this tables ones we have saved the information on the blockchain, this is the way that we can be 100% sure that our information is accurate.
 
-<img width="707" alt="image" src="https://github.com/MrJ8585/SmartCharity/assets/79416917/b26b5ab6-6aea-4b74-8d34-d2f67c214bff">
-
+<img width="707" alt="image" src="https://github.com/MrJ8585/SmartCharity/assets/79416917/41162b6f-d66f-4cfd-80b4-b38e042f2c8c">
 
 Entities of the project and their connections: 
 <img width="707" alt="image" src="https://github.com/MrJ8585/SmartCharity/assets/79416917/0ac2e343-d52b-4b11-8129-7aaddcfd37ed">
