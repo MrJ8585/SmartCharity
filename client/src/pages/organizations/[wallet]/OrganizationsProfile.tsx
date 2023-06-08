@@ -86,6 +86,7 @@ function OrganizacionProfile() {
     axios.get(`http://localhost/gastos/company/${wallet}`).then((response) => {
       setDescriptions(response.data.map((item: any) => item.descripcion));
     });
+    console.log(organization.wallet);
   };
 
   useEffect(() => {
@@ -105,6 +106,34 @@ function OrganizacionProfile() {
       categories: ["2019-05-01", "2019-05-02", "2019-05-03", "2019-05-04"],
     },
   };
+
+  const nfts = [
+    {
+      name: "What The Duck!",
+      description: "Get this FT by donating 100,000 units or more to WWF",
+      image: "https://i.imgur.com/izhXPv4.png",
+    },
+    {
+      name: "Paws and Reflect",
+      description: "Get this FT by donating 10,000 units or more to WWF",
+      image: "https://i.imgur.com/uEfhUnx.png",
+    },
+    {
+      name: "Fin-tastic Voyage",
+      description: "Get this FT by donating 1,000 units or more to WWF",
+      image: "https://i.imgur.com/X8iUUa6.png",
+    },
+    {
+      name: "Hop to It!",
+      description: "Get this FT by donating 100 units or more to WWF",
+      image: "https://i.imgur.com/eGalAvY.png",
+    },
+    {
+      name: "Catitude Strikes",
+      description: "Get this FT by donating 10 units or more to WWF",
+      image: "https://i.imgur.com/DbQQH1q.png",
+    },
+  ];
 
   const [amount, setAmount] = useState<string>("");
 
@@ -128,9 +157,11 @@ function OrganizacionProfile() {
             </Center>
             {/* Reports */}
             <Card>
-              <CardHeader>
-                <Heading size="md">Reports</Heading>
-              </CardHeader>
+              <Center>
+                <CardHeader>
+                  <Heading size="md">Reports</Heading>
+                </CardHeader>
+              </Center>
               <CardBody>
                 <Stack divider={<StackDivider />} spacing="4">
                   <Box>
@@ -160,7 +191,7 @@ function OrganizacionProfile() {
                               <PopoverContent>
                                 <PopoverCloseButton />
                                 <PopoverBody p={4}>
-                                  {JSON.stringify(date)}
+                                  {JSON.stringify(date, null, 2)}
                                 </PopoverBody>
                               </PopoverContent>
                               {date.quantity} Units
@@ -174,15 +205,46 @@ function OrganizacionProfile() {
               </CardBody>
             </Card>
             {/* NFTS */}
-            <Card justify="center" align="center">
-              <CardBody>
-                <Heading size="md">FTs</Heading>
-                <Center height="90%">
-                  <Text fontSize="lg" color="gray">
-                    This organization doesn't offer FTs
-                  </Text>
-                </Center>
-              </CardBody>
+            <Card justify="center" align="center" overflow="auto">
+              <Heading size="md" my={2}>
+                FTs
+              </Heading>
+              {organization.wallet !=
+              "0xb2fe4ca0daa2ca7b3810e52bda5015275e94ffa2ec6c2ff91667c6865833f27c" ? (
+                <CardBody>
+                  <Center height="90%">
+                    <Text fontSize="lg" color="gray">
+                      This organization doesn't offer FTs
+                    </Text>
+                  </Center>
+                </CardBody>
+              ) : (
+                <Card
+                  direction={{ base: "column", sm: "row" }}
+                  overflow="hidden"
+                  variant="outline"
+                >
+                  <Image
+                    objectFit="cover"
+                    maxW={{ base: "100%", sm: "200px" }}
+                    src="https://images.unsplash.com/photo-1667489022797-ab608913feeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw5fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=800&q=60"
+                    alt="Caffe Latte"
+                  />
+
+                  <Stack>
+                    <Center>
+                      <CardBody>
+                        <Heading size="md">The perfect latte</Heading>
+
+                        <Text py="2">
+                          Caffè latte is a coffee beverage of Italian origin
+                          made with espresso and steamed milk.
+                        </Text>
+                      </CardBody>
+                    </Center>
+                  </Stack>
+                </Card>
+              )}
             </Card>
           </Grid>
         </Flex>
