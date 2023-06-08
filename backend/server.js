@@ -23,6 +23,7 @@ app.get("/cat", async (req, res) => {
   res.send(data);
 });
 
+// insertar/crear una nueva donacion
 app.post("/donacion", async (req, res) => {
   const { userWallet, companyWallet, quantity, block, date } = req.body;
 
@@ -38,6 +39,7 @@ app.post("/donacion", async (req, res) => {
   res.status(200).send();
 });
 
+// obtener todas las donaciones de un usuario en particular
 app.post("/donacion/user/wallet", async (req, res) => {
   const { userWallet } = req.body;
 
@@ -54,6 +56,7 @@ app.post("/donacion/user/wallet", async (req, res) => {
   res.send(data);
 });
 
+// obtener todas las donaciones de una compañía en particular
 app.post("/donacion/company/wallet", async (req, res) => {
   const { companyWallet } = req.body;
 
@@ -70,6 +73,7 @@ app.post("/donacion/company/wallet", async (req, res) => {
   res.send(data);
 });
 
+// obtener los gastos de una compañía
 app.get("/gastos/company/:wallet", async (req, res) => {
   const { wallet } = req.params;
 
@@ -86,6 +90,7 @@ app.get("/gastos/company/:wallet", async (req, res) => {
   res.send(data);
 });
 
+// crear/insertar gastos de una compañía
 app.post("/gastos/company", async (req, res) => {
   const { companyWallet, quantity, descripcion, titulo, date } = req.body;
 
