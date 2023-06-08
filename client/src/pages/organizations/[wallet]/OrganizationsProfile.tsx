@@ -55,7 +55,7 @@ function OrganizacionProfile() {
   const [totalDonaciones, setTotalDonaciones] = useState<any>(0);
   const [dates, setDates] = useState<any>([]);
   const [descriptions, setDescriptions] = useState<any>({});
-  const [donadores, setDonadores] = useState<string[]>([]);
+  const [datesTL, setDatesTL] = useState<any>();
 
   const fetch = (wallet: any) => {
     axios
@@ -84,9 +84,10 @@ function OrganizacionProfile() {
       });
 
     axios.get(`http://localhost/gastos/company/${wallet}`).then((response) => {
+      console.log("RESPONSE", response);
       setDescriptions(response.data.map((item: any) => item.descripcion));
+      setDatesTL(response.data.map((item: any) => item.date));
     });
-    console.log(organization.wallet);
   };
 
   useEffect(() => {
@@ -205,46 +206,51 @@ function OrganizacionProfile() {
               </CardBody>
             </Card>
             {/* NFTS */}
-            <Card justify="center" align="center" overflow="auto">
+            <Card
+              justify="center"
+              align="center"
+              overflow="hidden"
+              maxH="400px"
+            >
               <Heading size="md" my={2}>
                 FTs
               </Heading>
-              {organization.wallet !=
-              "0xb2fe4ca0daa2ca7b3810e52bda5015275e94ffa2ec6c2ff91667c6865833f27c" ? (
-                <CardBody>
-                  <Center height="90%">
-                    <Text fontSize="lg" color="gray">
-                      This organization doesn't offer FTs
-                    </Text>
-                  </Center>
-                </CardBody>
-              ) : (
-                <Card
-                  direction={{ base: "column", sm: "row" }}
-                  overflow="hidden"
-                  variant="outline"
-                >
-                  <Image
-                    objectFit="cover"
-                    maxW={{ base: "100%", sm: "200px" }}
-                    src="https://images.unsplash.com/photo-1667489022797-ab608913feeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw5fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=800&q=60"
-                    alt="Caffe Latte"
-                  />
-
-                  <Stack>
-                    <Center>
-                      <CardBody>
-                        <Heading size="md">The perfect latte</Heading>
-
-                        <Text py="2">
-                          Caffè latte is a coffee beverage of Italian origin
-                          made with espresso and steamed milk.
-                        </Text>
-                      </CardBody>
+              <Box overflowY="scroll">
+                {organization.wallet !==
+                "0xb2fe4ca0daa2ca7b3810e52bda5015275e94ffa2ec6c2ff91667c6865833f27c" ? (
+                  <CardBody>
+                    <Center height="90%">
+                      <Text fontSize="lg" color="gray">
+                        This organization doesn't offer FTs
+                      </Text>
                     </Center>
-                  </Stack>
-                </Card>
-              )}
+                  </CardBody>
+                ) : (
+                  nfts.map((nft: any) => (
+                    <Card
+                      direction={{ base: "column", sm: "row" }}
+                      overflow="hidden"
+                      variant="outline"
+                    >
+                      <Center>
+                        <Image
+                          objectFit="cover"
+                          maxW={{ base: "100%", sm: "200px" }}
+                          src={nft.image}
+                          alt={nft.name}
+                        />
+
+                        <Stack>
+                          <CardBody>
+                            <Heading size="md">{nft.name}</Heading>
+                            <Text py="2">{nft.description}</Text>
+                          </CardBody>
+                        </Stack>
+                      </Center>
+                    </Card>
+                  ))
+                )}
+              </Box>
             </Card>
           </Grid>
         </Flex>
@@ -301,15 +307,17 @@ function OrganizacionProfile() {
         </Modal>
         <div className="root-div">
           <div style={{ width: "60%", height: "100px", margin: "0 auto" }}>
-            <HorizontalTimeline
-              styles={{ outline: "#96CFF7", foreground: "#37a0ea" }}
-              index={value}
-              indexClick={(index: any) => {
-                setValue(index);
-                setPrevious(value);
-              }}
-              values={dates}
-            />
+            {datesTL && (
+              <HorizontalTimeline
+                styles={{ outline: "#96CFF7", foreground: "#37a0ea" }}
+                index={value}
+                indexClick={(index: any) => {
+                  setValue(index);
+                  setPrevious(value);
+                }}
+                values={datesTL}
+              />
+            )}
           </div>
           <Center>
             <Text fontSize="2xl">{descriptions[value]}</Text>
