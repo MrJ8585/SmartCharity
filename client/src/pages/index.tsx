@@ -1,6 +1,5 @@
 import { Route, Routes } from "react-router-dom";
 import { Home } from "./home";
-import { Ongs } from "./ongs";
 
 const routes = [
   { path: "/home", Page: Home },
