@@ -6,7 +6,8 @@ import {
   ButtonGroup,
   Button,
 } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { Account } from "./account";
 // Kaiku Manga
 
@@ -14,31 +15,68 @@ type Pages = "home" | "organizations" | "profile";
 
 type Props = {
   isAccountVisible: boolean;
-  selectedPage?: Pages;
 };
 
-function HeaderBtn({ title, route }: any) {
+function HeaderBtn({ title, route, selected }: any) {
   return (
-    <Button variant="outline" color="white">
+    <Button
+      variant="outline"
+      background={selected ? "#37a0ea" : ""}
+      color={selected ? "white" : "black"}
+    >
       <Link to={route}>{title}</Link>
     </Button>
   );
 }
 
-function Header({ isAccountVisible, selectedPage }: Props) {
+function Header({ isAccountVisible }: Props) {
+  const [selectedPage, setSelectedPage] = useState<Pages>("home");
+  const location = useLocation();
+
+  useEffect(() => {
+    const url = location.pathname;
+    console.log(url);
+    if (url.includes("home")) {
+      setSelectedPage("home");
+    } else if (url.includes("organizations")) {
+      setSelectedPage("organizations");
+    } else if (url.includes("profile")) {
+      setSelectedPage("profile");
+    }
+  }, [location]);
+  console.log(window.location.href);
+
   return (
-    <Flex background="black" padding="10px 30px">
+    <Flex
+      background="white"
+      padding="10px 30px"
+      borderBottom="1px"
+      borderColor="gray.200"
+      color="black"
+    >
       <Center>
-        <Text fontSize="3xl" color="white">
+        <Text fontSize="3xl" color="#37a0ea" fontWeight="bold">
           SmartCharity
         </Text>
       </Center>
       <Spacer />
       <Center>
         <ButtonGroup>
-          <HeaderBtn title="Home" route="/home" />
-          <HeaderBtn title="Organizations" route="/organizations" />
-          <HeaderBtn title="Profile" route="/profile" />
+          <HeaderBtn
+            title="Home"
+            route="/home"
+            selected={selectedPage === "home"}
+          />
+          <HeaderBtn
+            title="Organizations"
+            route="/organizations"
+            selected={selectedPage === "organizations"}
+          />
+          <HeaderBtn
+            title="Profile"
+            route="/profile"
+            selected={selectedPage === "profile"}
+          />
         </ButtonGroup>
       </Center>
       <Spacer />
