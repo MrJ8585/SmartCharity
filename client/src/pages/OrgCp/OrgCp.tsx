@@ -29,7 +29,7 @@ import HorizontalTimeline from "react-horizontal-timeline";
 import { TransferButton } from "./Transfer";
 import Chart from "react-apexcharts";
 
-function Orgnization() {
+function OrgnizationCp() {
   const [value, setValue] = useState(0);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [previous, setPrevious] = useState(0);
@@ -67,7 +67,7 @@ function Orgnization() {
             {/* Image and */}
             <Center>
               <Image
-                src="https://assets.stickpng.com/images/58568d4c4f6ae202fedf2721.png"
+                src="https://d3ugyf2ht6aenh.cloudfront.net/stores/188/849/themes/common/logo-1866482157-1574635760-6cf4fcbbca71b55a01145347adaf5bde1574635760.png?0"
                 alt="WWF"
               />
             </Center>
@@ -122,13 +122,15 @@ function Orgnization() {
                     <Image
                       objectFit="cover"
                       maxW={{ base: "100%", sm: "200px" }}
-                      src="https://images.unsplash.com/photo-1667489022797-ab608913feeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw5fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=800&q=60"
-                      alt="Caffe Latte"
+                      src="https://i.imgur.com/izhXPv4.png"
+                      alt="WhatTheDuck"
                     />
                     <Center>
                       <CardBody>
-                        <Heading size="md">The perfect latte</Heading>
-                        <Text fontSize="sm">First Tier</Text>
+                        <Heading size="md">What The Duck!</Heading>
+                        <Text fontSize="sm">
+                          Get this FT by donating more than $100,000 to WWF
+                        </Text>
                       </CardBody>
                     </Center>
                   </Card>
@@ -141,13 +143,78 @@ function Orgnization() {
                     <Image
                       objectFit="cover"
                       maxW={{ base: "100%", sm: "200px" }}
-                      src="https://images.unsplash.com/photo-1667489022797-ab608913feeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw5fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=800&q=60"
-                      alt="Caffe Latte"
+                      src="https://i.imgur.com/uEfhUnx.png"
+                      alt="PawsAndReflect"
                     />
                     <Center>
                       <CardBody>
-                        <Heading size="md">The perfect latte</Heading>
-                        <Text fontSize="sm">First Tier</Text>
+                        <Heading size="md">Paws and Reflect</Heading>
+                        <Text fontSize="sm">
+                          Get this FT by donating $10,000 or more
+                        </Text>
+                      </CardBody>
+                    </Center>
+                  </Card>
+                  <Card
+                    direction={{ base: "column", sm: "row" }}
+                    overflow="hidden"
+                    variant="outline"
+                    m={4}
+                  >
+                    <Image
+                      objectFit="cover"
+                      maxW={{ base: "100%", sm: "200px" }}
+                      src="https://i.imgur.com/X8iUUa6.png"
+                      alt="FintasticVoyage"
+                    />
+                    <Center>
+                      <CardBody>
+                        <Heading size="md">Fin-tastic Voyage</Heading>
+                        <Text fontSize="sm">
+                          Get this FT by donating $1,000 or more
+                        </Text>
+                      </CardBody>
+                    </Center>
+                  </Card>
+                  <Card
+                    direction={{ base: "column", sm: "row" }}
+                    overflow="hidden"
+                    variant="outline"
+                    m={4}
+                  >
+                    <Image
+                      objectFit="cover"
+                      maxW={{ base: "100%", sm: "200px" }}
+                      src="https://i.imgur.com/eGalAvY.png"
+                      alt="HoptoIt"
+                    />
+                    <Center>
+                      <CardBody>
+                        <Heading size="md">Hop to It!</Heading>
+                        <Text fontSize="sm">
+                          Get this FT by donating $100 or more
+                        </Text>
+                      </CardBody>
+                    </Center>
+                  </Card>
+                  <Card
+                    direction={{ base: "column", sm: "row" }}
+                    overflow="hidden"
+                    variant="outline"
+                    m={4}
+                  >
+                    <Image
+                      objectFit="cover"
+                      maxW={{ base: "100%", sm: "200px" }}
+                      src="https://i.imgur.com/DbQQH1q.png"
+                      alt="CatitudeStrikes"
+                    />
+                    <Center>
+                      <CardBody>
+                        <Heading size="md">Catitude Strikes</Heading>
+                        <Text fontSize="sm">
+                          Get this FT by donating $10 or more
+                        </Text>
                       </CardBody>
                     </Center>
                   </Card>
@@ -159,7 +226,7 @@ function Orgnization() {
         <Center>
           <Flex flexDir="column">
             <Button mt={4} onClick={onOpen}>
-              Open Modal
+              Donate
             </Button>
             <Box>
               <Heading size="xl" my={4}>
@@ -224,4 +291,4 @@ function Orgnization() {
   );
 }
 
-export { Orgnization };
+export { OrgnizationCp };
