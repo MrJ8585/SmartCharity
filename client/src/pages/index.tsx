@@ -1,7 +1,11 @@
 import { Route, Routes } from "react-router-dom";
 import { Home } from "./home";
 
-const routes = [{ path: "/home", Page: Home }];
+const routes = [
+  { path: "/home", Page: Home },
+  { path: "/organizations", Page: Home },
+  { path: "/profile", Page: Home },
+];
 
 function Routing() {
   const getRoutes = () =>
