@@ -56,8 +56,11 @@ function OrganizacionProfile() {
   const [dates, setDates] = useState<any>([]);
   const [descriptions, setDescriptions] = useState<any>({});
   const [datesTL, setDatesTL] = useState<any>();
-  const [titles, setTitles] = useState<any>();
+  const [hash, setHash] = useState<any>([]);
   const [quantity, setQuantity] = useState<any>(0);
+  const [expenses, setExpenses] = useState<any>([]);
+  const [donations, setDonations] = useState<any>([]);
+  const [chartArr, setChartArr] = useState<any>([]);
 
   const fetch = (wallet: any) => {
     axios
@@ -70,6 +73,7 @@ function OrganizacionProfile() {
           0
         );
         setTotalDonaciones(totalQuantity);
+        setDonations(res.data);
         const randomDates: any = res.data.map((item: any) => {
           return {
             ...item,
@@ -87,10 +91,13 @@ function OrganizacionProfile() {
       const descriptions = data.map((item: any) => item.descripcion);
       const datesTL = data.map((item: any) => item.date);
       const qty = data.map((item: any) => item.quantity);
+      const block = data.map((item: any) => item.bloque);
 
       setDescriptions(descriptions);
       setDatesTL(datesTL);
       setQuantity(qty);
+      setExpenses(data);
+      setHash(block);
     });
   };
 
@@ -98,17 +105,62 @@ function OrganizacionProfile() {
     const organizacion = organizations.find((org) => org.wallet === id);
     setOrganization(organizacion);
     fetch(organizacion?.wallet);
+    buildCharts();
   }, [value]);
+
+  const buildCharts = () => {
+    const mergedArr = [...donations, ...expenses];
+
+    // Sort the merged array by date
+    const sortedArray = mergedArr.sort(
+      (a: any, b: any) =>
+        new Date(a.date).getTime() - new Date(b.date).getTime()
+    );
+
+    setChartArr(sortedArray);
+  };
+
+  const completeArrayDates = (): string[] => {
+    var init: string[] = [""];
+
+    chartArr.forEach((index: any) => {
+      const fecha = index.date;
+      if (!init.includes(fecha)) {
+        const lastFecha = fecha.split("T");
+        init.push(lastFecha[0]);
+      }
+    });
+    console.log(init);
+    return init;
+  };
+
+  const completeArrayUnits = (): number[] => {
+    var init: number[] = [0];
+    var num: number = 0;
+
+    chartArr.forEach((index: any) => {
+      const cantidad = index.quantity;
+      if (!index.userWallet) {
+        num = num - cantidad;
+      } else {
+        num + cantidad;
+      }
+      init.push(num);
+    });
+
+    return init;
+  };
 
   const series = [
     {
-      name: "Guests",
-      data: [19, 22, 20, 26],
+      name: "Units",
+      data: completeArrayUnits(),
     },
   ];
+
   const options = {
     xaxis: {
-      categories: ["2019-05-01", "2019-05-02", "2019-05-03", "2019-05-04"],
+      categories: completeArrayDates(),
     },
   };
 
@@ -328,7 +380,15 @@ function OrganizacionProfile() {
               <Center>
                 <Heading size="lg">${quantity[value]}</Heading>
               </Center>
-              <Text fontSize="xl">{descriptions[value]}</Text>
+              <Center>
+                <Text fontSize="xl">{descriptions[value]}</Text>
+              </Center>
+              <Center>
+                <Heading size="md" mt={4}>
+                  Hash:
+                </Heading>
+              </Center>
+              <Text fontSize="xl">{hash[value]}</Text>
             </Flex>
           </Center>
         </div>
