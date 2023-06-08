@@ -1,4 +1,5 @@
 import { ViewIcon } from "@chakra-ui/icons";
+import axios from "axios";
 import {
   Container,
   Flex,
@@ -13,9 +14,43 @@ import {
   Input,
   Textarea,
   Button,
+  useStatStyles,
 } from "@chakra-ui/react";
+import React, { useState } from "react";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
 
 function Declare() {
+  const [title, setTitle] = useState<string>("");
+  const [quantity, setQuantity] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
+  const [value, onChange] = useState(new Date().toString());
+
+  const handleTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(event.target.value);
+  };
+
+  const handleQuantity = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setQuantity(event.target.value);
+  };
+
+  const handleDescription = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setDescription(event.target.value);
+  };
+
+  const sendForm = () => {
+    axios
+      .post("localhost/gastos/company", {
+        title: title,
+        quantity: quantity,
+        description: description,
+        date: value,
+      })
+      .then((response) => {
+        console.log(response);
+      });
+  };
+
   return (
     <Container w="90%" maxW="container.lg" marginTop="1em">
       <Center marginTop={6}>
@@ -41,6 +76,7 @@ function Declare() {
           placeholder="Título"
           size="md"
           type="number"
+          onChange={handleTitle}
         />
         <Input
           //   value={6}
@@ -48,10 +84,26 @@ function Declare() {
           placeholder="Cantidad"
           size="md"
           type="number"
+          onChange={handleQuantity}
         />
       </Flex>
-      <Textarea placeholder="Adjunta la descripción de tu declaración aquí" />
-      <Button colorScheme="facebook" size="sm" marginTop={3}>
+      <Textarea
+        placeholder="Adjunta la descripción de tu declaración aquí"
+        onChange={handleDescription}
+      />
+      <Flex marginTop={3}>
+        <Calendar
+          onChange={(val) => onChange(val?.toString() ?? new Date().toString())}
+          value={value}
+        />
+      </Flex>
+      <Button
+        colorScheme="facebook"
+        size="sm"
+        marginTop={3}
+        type="submit"
+        onSubmit={sendForm}
+      >
         Registrar
       </Button>
     </Container>
