@@ -77,7 +77,7 @@ function TransferButton(props: Props) {
             console.log(status);
             if (status.isInBlock) {
               toast({
-                title: "Account created.",
+                title: "Donation made",
                 description: "We've successfully made the donation for you.",
                 status: "success",
                 duration: 9000,
