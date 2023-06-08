@@ -27,6 +27,7 @@ import { useState } from "react";
 // @ts-ignore
 import HorizontalTimeline from "react-horizontal-timeline";
 import { TransferButton } from "./Transfer";
+import Chart from "react-apexcharts";
 
 function Orgnization() {
   const [value, setValue] = useState(0);
@@ -40,6 +41,18 @@ function Orgnization() {
     "The event of 15 Jan 2021 : Festival",
     "The event of 22 March 2021 : Board Exam",
   ];
+
+  const series = [
+    {
+      name: "Guests",
+      data: [19, 22, 20, 26],
+    },
+  ];
+  const options = {
+    xaxis: {
+      categories: ["2019-05-01", "2019-05-02", "2019-05-03", "2019-05-04"],
+    },
+  };
 
   return (
     <Container w="90%" maxW="container.xl">
@@ -196,6 +209,16 @@ function Orgnization() {
             <Text fontSize="2xl">{description[value]}</Text>
           </Center>
         </div>
+        <Center>
+          <Flex flexDir="column">
+            <Center>
+              <Heading size="xl" mt={10}>
+                Budget timeline
+              </Heading>
+            </Center>
+            <Chart type="line" series={series} options={options} width={600} />
+          </Flex>
+        </Center>
       </Flex>
     </Container>
   );
