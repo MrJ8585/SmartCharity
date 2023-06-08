@@ -1,6 +1,5 @@
-import { Logo } from './logo';
-import { Account } from './account';
-import styles from './Header.module.scss';
+import { Account } from "./account";
+import styles from "./Header.module.scss";
 
 type Props = {
   isAccountVisible: boolean;
@@ -8,8 +7,7 @@ type Props = {
 
 function Header({ isAccountVisible }: Props) {
   return (
-    <header className={styles.header}>
-      <Logo />
+    <header style={{ background: "black" }}>
       {isAccountVisible && <Account />}
     </header>
   );
