@@ -15,6 +15,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useAccount } from "@gear-js/react-hooks";
 import { organizations } from "pages/organizations/Organizations";
+import Identicon from "@polkadot/react-identicon";
 
 const badges = [
   {
@@ -67,7 +68,6 @@ function DonationRecord({ title, wallet, amount, date, imgSrc }: any) {
 function Profile() {
   const { account, accounts } = useAccount();
   const [donations, setDonations] = useState<any[]>([]);
-
   useEffect(() => {
     getDonations();
   }, []);
@@ -93,8 +93,6 @@ function Profile() {
     );
   };
 
-  console.log(donations);
-
   return (
     <Container w="90%" maxW="container.lg" marginTop="1em">
       <Flex
@@ -104,26 +102,17 @@ function Profile() {
         borderBottom="1px"
         borderColor="gray.200"
       >
-        <Flex>
-          <Image
-            src="https://wallpapers.com/images/featured/87h46gcobjl5e4xu.jpg"
-            boxSize="200px"
-            borderRadius="full"
-          />
-          <Box padding="10px">
-            <Text fontSize="3xl">Clini</Text>
-            <Text color="gray.500">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
+        <Flex alignItems="center">
+          <Identicon value={account?.address} theme="polkadot" size={200} />
+          <Box padding="10px" maxWidth="400px">
+            <Text fontSize="3xl">{account?.meta.name}</Text>
+            <Text color="gray.500" fontSize="1em">
+              {account?.address}
             </Text>
           </Box>
         </Flex>
         <Card>
-          <VStack
-            // border="1px"
-            alignItems="center"
-            padding="1em"
-            borderRadius="1em"
-          >
+          <VStack alignItems="center" padding="1em" borderRadius="1em">
             <Text fontSize="2em" fontWeight="semibold" color="#37a0ea">
               Badges
             </Text>
