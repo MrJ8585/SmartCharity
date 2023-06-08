@@ -172,7 +172,7 @@ function OrganizacionProfile() {
             </Center>
             <ModalCloseButton />
             <ModalBody>
-              <Center>
+              <Center mb={5}>
                 <TransferButton
                   to={organization.wallet}
                   amount={parseInt(amount)}
