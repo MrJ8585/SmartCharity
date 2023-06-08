@@ -1,9 +1,10 @@
 import { Route, Routes } from "react-router-dom";
 import { Home } from "./home";
+import { Organizations } from "./organizations/Oranizations";
 
 const routes = [
   { path: "/home", Page: Home },
-  { path: "/organizations", Page: Home },
+  { path: "/organizations", Page: Organizations },
   { path: "/profile", Page: Home },
 ];
 
