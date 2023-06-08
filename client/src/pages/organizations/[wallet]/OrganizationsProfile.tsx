@@ -68,18 +68,15 @@ function OrganizacionProfile() {
           0
         );
         setTotalDonaciones(totalQuantity);
-        console.log("DATA", res.data);
         const randomDates: any = res.data.map((item: any) => {
           return {
             ...item,
             date: format(new Date(item.date), "yyyy-MM-dd"),
           };
         });
-        console.log("RANDOM DATES", randomDates);
         const sortedByDate = randomDates.sort((a: any, b: any) => {
-          return a.date - b.date;
+          return b.id - a.id;
         });
-        console.log("DATE", sortedByDate);
         setDates(sortedByDate);
       });
 
@@ -300,6 +297,7 @@ function OrganizacionProfile() {
                   to={organization.wallet}
                   amount={parseInt(amount)}
                   onClose={onClose}
+                  fetch={fetch}
                 />
               </Center>
             </ModalBody>

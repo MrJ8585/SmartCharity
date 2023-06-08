@@ -11,6 +11,7 @@ import {
   VStack,
   Center,
 } from "@chakra-ui/react";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const organizations = [
@@ -42,6 +43,13 @@ const organizations = [
 ];
 
 function OrganizationCard({ title, wallet, img }: any) {
+  useEffect(() => {}, []);
+
+  // const getTotalDonations = async () => {
+
+  //   axios.get
+  // };
+
   return (
     <Card padding="10px" width="full">
       <Flex>

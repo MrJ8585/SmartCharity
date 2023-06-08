@@ -15,6 +15,7 @@ import {
 } from "@chakra-ui/react";
 import whiteLogo from "../../assets/images/logoBlack.png";
 import blueLogo from "../../assets/images/logoBlue.png";
+import { organizations } from "pages/organizations/Organizations";
 
 type FeatureProps = {
   imageSrc: string;
@@ -27,7 +28,12 @@ function Feature({ imageSrc, title, content }: FeatureProps) {
     <Card w="200px">
       <CardBody>
         <VStack>
-          <Image src={imageSrc} boxSize="100px" borderRadius="full" />
+          <Image
+            src={imageSrc}
+            boxSize="100px"
+            borderRadius="full"
+            objectFit="cover"
+          />
           <Text align="center" fontSize="lg" fontWeight="semibold">
             {title}
           </Text>
@@ -61,46 +67,47 @@ function Organization({ title, imageSrc }: OrganizationProps) {
 const features = [
   {
     title: "Donate to your favorite ONG",
-    imageSrc:
-      "https://static-00.iconduck.com/assets.00/coinbase-icon-512x512-rgejvkzh.png",
+    imageSrc: "https://cdn-icons-png.flaticon.com/512/3430/3430447.png",
     content:
       "There's a lot of ONGs where you can donate and help to the most in need",
   },
   {
     title: "Track ONG's money",
-    imageSrc: "https://bit.ly/2Z4KKcF",
+    imageSrc:
+      "https://cdn.icon-icons.com/icons2/1860/PNG/512/graphmagnifier_118081.png",
     content: "See for what is being used the money you donated",
   },
   {
-    title: "Track ONG's money",
-    imageSrc: "https://bit.ly/2Z4KKcF",
+    title: "Get exclusive badges",
+    imageSrc:
+      "https://icon-library.com/images/badge-icon-png/badge-icon-png-24.jpg",
     content: "Show off you ONG's donator tier badges on your profile",
   },
 ];
 
-const organizations = [
-  {
-    title: "CETYS Universidad",
-    imageSrc:
-      "https://static-00.iconduck.com/assets.00/coinbase-icon-512x512-rgejvkzh.png",
-  },
-  { title: "ONG 2", imageSrc: "https://bit.ly/3qBf6gB" },
-  {
-    title: "CETYS Universidad",
-    imageSrc:
-      "https://static-00.iconduck.com/assets.00/coinbase-icon-512x512-rgejvkzh.png",
-  },
-  {
-    title: "CETYS Universidad",
-    imageSrc:
-      "https://static-00.iconduck.com/assets.00/coinbase-icon-512x512-rgejvkzh.png",
-  },
-  {
-    title: "CETYS Universidad",
-    imageSrc:
-      "https://static-00.iconduck.com/assets.00/coinbase-icon-512x512-rgejvkzh.png",
-  },
-];
+// const organizations = [
+//   {
+//     title: "CETYS Universidad",
+//     imageSrc:
+//       "https://static-00.iconduck.com/assets.00/coinbase-icon-512x512-rgejvkzh.png",
+//   },
+//   { title: "ONG 2", imageSrc: "https://bit.ly/3qBf6gB" },
+//   {
+//     title: "CETYS Universidad",
+//     imageSrc:
+//       "https://static-00.iconduck.com/assets.00/coinbase-icon-512x512-rgejvkzh.png",
+//   },
+//   {
+//     title: "CETYS Universidad",
+//     imageSrc:
+//       "https://static-00.iconduck.com/assets.00/coinbase-icon-512x512-rgejvkzh.png",
+//   },
+//   {
+//     title: "CETYS Universidad",
+//     imageSrc:
+//       "https://static-00.iconduck.com/assets.00/coinbase-icon-512x512-rgejvkzh.png",
+//   },
+// ];
 
 function Home() {
   //zod
@@ -154,7 +161,7 @@ function Home() {
           {organizations.map((organization) => (
             <Organization
               title={organization.title}
-              imageSrc={organization.imageSrc}
+              imageSrc={organization.img}
             />
           ))}
         </Flex>
