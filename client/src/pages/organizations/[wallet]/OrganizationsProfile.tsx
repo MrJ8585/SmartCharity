@@ -23,6 +23,14 @@ import {
   ModalHeader,
   ModalCloseButton,
   Input,
+  List,
+  ListItem,
+  ListIcon,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverCloseButton,
+  PopoverBody,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { organizations } from "../Organizations";
@@ -32,6 +40,10 @@ import Chart from "react-apexcharts";
 import { TransferButton } from "./Transfer";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { format } from "date-fns";
+import { MoonIcon } from "@chakra-ui/icons";
+import { json } from "stream/consumers";
+import { Json } from "@polkadot/types";
 
 function OrganizacionProfile() {
   const [value, setValue] = useState(0);
@@ -40,33 +52,46 @@ function OrganizacionProfile() {
   const [organization, setOrganization] = useState<any>({});
   const { id } = useParams();
   const [totalDonaciones, setTotalDonaciones] = useState<any>(0);
+  const [dates, setDates] = useState<any>([]);
+  const [descriptions, setDescriptions] = useState<any>({});
   const [donadores, setDonadores] = useState<string[]>([]);
 
-  const fetch = () => {
+  const fetch = (wallet: any) => {
     axios
-      .post(`localhost/donacion/company/wallet`, {
-        wallet: organization.wallet,
+      .post(`http://localhost/donacion/company/wallet`, {
+        companyWallet: wallet,
       })
       .then((res) => {
-        setTotalDonaciones(res.data.quantity);
+        const totalQuantity = res.data.reduce(
+          (sum: any, item: any) => sum + item.quantity,
+          0
+        );
+        setTotalDonaciones(totalQuantity);
+        console.log("DATA", res.data);
+        const randomDates: any = res.data.map((item: any) => {
+          return {
+            ...item,
+            date: format(new Date(item.date), "yyyy-MM-dd"),
+          };
+        });
+        console.log("RANDOM DATES", randomDates);
+        const sortedByDate = randomDates.sort((a: any, b: any) => {
+          return a.date - b.date;
+        });
+        console.log("DATE", sortedByDate);
+        setDates(sortedByDate);
       });
 
-    axios.post("");
+    axios.get(`http://localhost/gastos/company/${wallet}`).then((response) => {
+      setDescriptions(response.data.map((item: any) => item.descripcion));
+    });
   };
 
-  useEffect(() => {});
-
   useEffect(() => {
-    setOrganization(organizations.find((org) => org.wallet === id));
+    const organizacion = organizations.find((org) => org.wallet === id);
+    setOrganization(organizacion);
+    fetch(organizacion?.wallet);
   }, [value]);
-
-  const VALUES = ["2021-01-01", "2021-01-15", "2021-03-22"];
-
-  const description = [
-    "The event of 1 Jan 2021 : Happy New Year",
-    "The event of 15 Jan 2021 : Festival",
-    "The event of 22 March 2021 : Board Exam",
-  ];
 
   const series = [
     {
@@ -109,7 +134,7 @@ function OrganizacionProfile() {
                 <Stack divider={<StackDivider />} spacing="4">
                   <Box>
                     <Heading size="xs" textTransform="uppercase">
-                      Total Donaciones
+                      Total donations
                     </Heading>
                     <Text pt="2" fontSize="sm" color="green">
                       ${totalDonaciones}
@@ -117,18 +142,31 @@ function OrganizacionProfile() {
                   </Box>
                   <Box>
                     <Heading size="xs" textTransform="uppercase">
-                      Top donadores
+                      Latest Transactions
                     </Heading>
                     <Text pt="2" fontSize="sm">
-                      Check out the overview of your clients.
-                    </Text>
-                  </Box>
-                  <Box>
-                    <Heading size="xs" textTransform="uppercase">
-                      Últrimas transacciones
-                    </Heading>
-                    <Text pt="2" fontSize="sm">
-                      See a detailed analysis of all your business clients.
+                      <List spacing={1}>
+                        {dates.slice(0, 3).map((date: any) => (
+                          <Popover>
+                            <ListItem>
+                              <PopoverTrigger>
+                                <Button mx={1}>
+                                  <strong>
+                                    {date.userWallet.substring(0, 5)}
+                                  </strong>{" "}
+                                </Button>
+                              </PopoverTrigger>
+                              <PopoverContent>
+                                <PopoverCloseButton />
+                                <PopoverBody p={4}>
+                                  {JSON.stringify(date)}
+                                </PopoverBody>
+                              </PopoverContent>
+                              {date.quantity} Units
+                            </ListItem>
+                          </Popover>
+                        ))}
+                      </List>
                     </Text>
                   </Box>
                 </Stack>
@@ -154,7 +192,7 @@ function OrganizacionProfile() {
             </Button>
             <Box>
               <Heading size="xl" my={4}>
-                Donation timeline
+                Spending timeline
               </Heading>
               <Text size="md" my={4}>
                 Here you can see why the ONG needs the donations
@@ -198,11 +236,11 @@ function OrganizacionProfile() {
                 setValue(index);
                 setPrevious(value);
               }}
-              values={VALUES}
+              values={dates}
             />
           </div>
           <Center>
-            <Text fontSize="2xl">{description[value]}</Text>
+            <Text fontSize="2xl">{descriptions[value]}</Text>
           </Center>
         </div>
         <Center>
