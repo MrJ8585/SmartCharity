@@ -84,7 +84,9 @@ function TransferButton(props: Props) {
                 duration: 9000,
                 isClosable: true,
               });
-              props.fetch(props.to);
+              setTimeout(() => {
+                props.fetch(props.to);
+              }, 1000);
               // alert.success(`Block hash #${status.asInBlock.toString()}`);
             } else {
               if (status.type === "Finalized") {

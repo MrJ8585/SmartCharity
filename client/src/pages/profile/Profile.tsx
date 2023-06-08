@@ -10,6 +10,11 @@ import {
   CardBody,
   Spacer,
 } from "@chakra-ui/react";
+import { get } from "http";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { useAccount } from "@gear-js/react-hooks";
+import { organizations } from "pages/organizations/Organizations";
 
 const badges = [
   {
@@ -21,14 +26,6 @@ const badges = [
     imgSrc:
       "https://img.freepik.com/free-vector/floating-yellow-star_78370-598.jpg?w=2000",
   },
-];
-
-const donationRecords = [
-  {
-    title: "Donation 1",
-    imgSrc: "https://cdn-icons-png.flaticon.com/512/189/189715.png",
-  },
-  {},
 ];
 
 function Badge({ title, imgSrc }: any) {
@@ -44,20 +41,23 @@ function Badge({ title, imgSrc }: any) {
   );
 }
 
-function DonationRecord() {
+function DonationRecord({ title, wallet, amount, date, imgSrc }: any) {
   return (
     <Card width="700px">
       <CardBody>
         <Flex alignItems="center" justifyContent="flex-start" gap="2em">
-          <Image
-            src="https://cdn-icons-png.flaticon.com/512/189/189715.png"
-            boxSize="60px"
-          />
-          <Text fontSize="lg" fontWeight="semibold">
-            Hello
-          </Text>
+          <Image src={imgSrc} boxSize="60px" />
+          <VStack alignItems="flex-start" fontWeight="light">
+            <Flex alignItems="center" gap="2em">
+              <Text fontSize="lg" fontWeight="semibold">
+                {title}
+              </Text>
+              <Text>{date}</Text>
+            </Flex>
+            <Text fontSize=".8em">{wallet}</Text>
+          </VStack>
           <Spacer />
-          <Text>$30000 pesos</Text>
+          <Text>$ {amount}</Text>
         </Flex>
       </CardBody>
     </Card>
@@ -65,6 +65,36 @@ function DonationRecord() {
 }
 
 function Profile() {
+  const { account, accounts } = useAccount();
+  const [donations, setDonations] = useState<any[]>([]);
+
+  useEffect(() => {
+    getDonations();
+  }, []);
+
+  const getDonations = async () => {
+    const userWallet = accounts[0].address;
+    const response = await axios.post(
+      "http://localhost:80/donacion/user/wallet",
+      { userWallet: userWallet }
+    );
+    const donationsResponse = response.data;
+    setDonations(
+      donationsResponse.map((donation: any) => {
+        const cosa = organizations.find(
+          (org) => org.wallet === donation.companyWallet
+        );
+        return {
+          title: cosa?.title,
+          imgSrc: cosa?.img,
+          ...donation,
+        };
+      })
+    );
+  };
+
+  console.log(donations);
+
   return (
     <Container w="90%" maxW="container.lg" marginTop="1em">
       <Flex
@@ -110,8 +140,14 @@ function Profile() {
           Donations History
         </Text>
         <VStack>
-          {donationRecords.map((donationRecord) => (
-            <DonationRecord />
+          {donations.map((donationRecord) => (
+            <DonationRecord
+              title={donationRecord.title}
+              date={donationRecord.date}
+              imgSrc={donationRecord.imgSrc}
+              amount={donationRecord.quantity}
+              wallet={donationRecord.companyWallet}
+            />
           ))}
         </VStack>
       </VStack>
