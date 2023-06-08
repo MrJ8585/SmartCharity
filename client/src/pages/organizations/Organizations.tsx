@@ -11,8 +11,9 @@ import {
   VStack,
   Center,
 } from "@chakra-ui/react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const organizations = [
   {
@@ -42,14 +43,7 @@ const organizations = [
   },
 ];
 
-function OrganizationCard({ title, wallet, img }: any) {
-  useEffect(() => {}, []);
-
-  // const getTotalDonations = async () => {
-
-  //   axios.get
-  // };
-
+function OrganizationCard({ title, wallet, img, numberDonations }: any) {
   return (
     <Card padding="10px" width="full">
       <Flex>
@@ -73,7 +67,7 @@ function OrganizationCard({ title, wallet, img }: any) {
           <Center>
             <Text fontSize="md" fontWeight="light">
               <span style={{ fontWeight: "bold", marginRight: "10px" }}>
-                11231
+                {numberDonations}
               </span>
               total donations
             </Text>
@@ -94,14 +88,36 @@ function OrganizationCard({ title, wallet, img }: any) {
 }
 
 function Organizations() {
+  const [organizationData, setOrganizationData] = useState<any>([]);
+  useEffect(() => {
+    getTotalDonations();
+  }, []);
+
+  console.log(organizationData);
+
+  const getTotalDonations = async () => {
+    const info: any = [];
+    for (const organization of organizations) {
+      const response = await axios.post(
+        "http://localhost:80/donacion/company/wallet",
+        {
+          companyWallet: organization.wallet,
+        }
+      );
+      info.push({ ...organization, totalDonations: response.data.length });
+    }
+    setOrganizationData(info);
+  };
+
   return (
     <Container maxW="container.lg" marginTop="10px">
       <VStack spacing="1em">
-        {organizations.map((organization) => (
+        {organizationData.map((organization: any) => (
           <OrganizationCard
             title={organization.title}
             img={organization.img}
             wallet={organization.wallet}
+            numberDonations={organization.totalDonations}
           />
         ))}
       </VStack>

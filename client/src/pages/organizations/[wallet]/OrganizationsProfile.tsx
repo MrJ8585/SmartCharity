@@ -80,9 +80,11 @@ function OrganizacionProfile() {
         setDates(sortedByDate);
       });
 
-    axios.get(`http://localhost/gastos/company/${wallet}`).then((response) => {
-      setDescriptions(response.data.map((item: any) => item.descripcion));
-    });
+    axios
+      .get(`http://localhost:80/gastos/company/${wallet}`)
+      .then((response) => {
+        setDescriptions(response.data.map((item: any) => item.descripcion));
+      });
   };
 
   useEffect(() => {
