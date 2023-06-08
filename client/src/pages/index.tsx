@@ -1,6 +1,9 @@
 import { Route, Routes } from "react-router-dom";
 import { Home } from "./home";
 import { Ongs } from "./ongs";
+import { connect } from "./blockchain/connection";
+
+connect().catch(console.error);
 
 const routes = [
   { path: "/", Page: Home },
