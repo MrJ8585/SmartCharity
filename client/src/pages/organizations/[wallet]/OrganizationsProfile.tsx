@@ -105,8 +105,12 @@ function OrganizacionProfile() {
     const organizacion = organizations.find((org) => org.wallet === id);
     setOrganization(organizacion);
     fetch(organizacion?.wallet);
-    buildCharts();
   }, [value]);
+
+  useEffect(() => {
+    if (!hash || !expenses) return;
+    buildCharts();
+  }, [expenses, hash]);
 
   const buildCharts = () => {
     const mergedArr = [...donations, ...expenses];
@@ -130,7 +134,7 @@ function OrganizacionProfile() {
         init.push(lastFecha[0]);
       }
     });
-    console.log(init);
+    console.log(init, "fechas");
     return init;
   };
 
@@ -143,11 +147,11 @@ function OrganizacionProfile() {
       if (!index.userWallet) {
         num = num - cantidad;
       } else {
-        num + cantidad;
+        num = num + cantidad;
       }
       init.push(num);
     });
-
+    console.log(init, "numeros");
     return init;
   };
 
