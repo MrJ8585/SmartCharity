@@ -4,7 +4,6 @@ import { decodeAddress, getProgramMetadata } from "@gear-js/api";
 import { Button } from "@gear-js/ui";
 
 interface Props {
-  from: string;
   to: string;
   amount: number;
 }
@@ -28,7 +27,7 @@ function TransferButton(props: Props) {
     destination: programIDFT, // programId
     payload: {
       transfer: [
-        decodeAddress(props.from),
+        decodeAddress(account!.address),
         decodeAddress(props.to),
         props.amount,
       ],

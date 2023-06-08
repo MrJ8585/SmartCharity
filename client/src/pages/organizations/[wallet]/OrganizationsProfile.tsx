@@ -22,8 +22,9 @@ import {
   ModalContent,
   ModalHeader,
   ModalCloseButton,
+  Input,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { organizations } from "../Organizations";
 //@ts-ignore
 import HorizontalTimeline from "react-horizontal-timeline";
@@ -60,6 +61,12 @@ function OrganizacionProfile() {
     xaxis: {
       categories: ["2019-05-01", "2019-05-02", "2019-05-03", "2019-05-04"],
     },
+  };
+
+  const [amount, setAmount] = useState<string>("");
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setAmount(event.target.value);
   };
 
   return (
@@ -142,22 +149,27 @@ function OrganizacionProfile() {
         <Modal isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
           <ModalContent>
-            <ModalHeader>Modal Title</ModalHeader>
+            <ModalHeader textAlign="center">{`Donate to ${organization.title}`}</ModalHeader>
+            <Center>
+              <Input
+                placeholder="$ ####"
+                type="number"
+                width="50%"
+                onChange={handleChange}
+              />
+            </Center>
             <ModalCloseButton />
             <ModalBody>
-              <TransferButton
-                from="0xba939e1c710bf21923a60ef4f9f63f6a8f871b6fa9ebb87c684cb52cf553ef66"
-                to="0xd6d8fa0cedb0d42900585a8e2e086eee2f65adb5e2985f373dae10fab6b97377"
-                amount={100}
-              />
+              <Center>
+                <TransferButton
+                  // from="0xba939e1c710bf21923a60ef4f9f63f6a8f871b6fa9ebb87c684cb52cf553ef66"
+                  // to={`0x${organization.wallet}`}
+                  to={organization.wallet}
+                  // to="0x88cc79086d8490ff9ee727bc666fee8e72e5eb0116446ec4a11454be5a21691c"
+                  amount={parseInt(amount)}
+                />
+              </Center>
             </ModalBody>
-
-            <ModalFooter>
-              <Button colorScheme="blue" mr={3} onClick={onClose}>
-                Close
-              </Button>
-              <Button variant="ghost">Secondary Action</Button>
-            </ModalFooter>
           </ModalContent>
         </Modal>
         <div className="root-div">
