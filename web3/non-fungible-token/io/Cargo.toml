@@ -10,3 +10,4 @@ gstd.workspace = true
 gear-lib.workspace = true
 primitive-types.workspace = true
 gmeta = { workspace = true, features = ["codegen"] }
+hashbrown = "0.13.1"

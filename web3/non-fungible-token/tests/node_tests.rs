@@ -41,8 +41,9 @@ async fn mint_test() -> Result<()> {
     let token_metadata = TokenMetadata {
         name: "CryptoKitty".to_string(),
         description: "Description".to_string(),
-        media: "http://".to_string(),
-        reference: "http://".to_string(),
+        image_url: "http://".to_string(),
+        donacion: 100,
+        ong: "WWF".to_string(),
     };
 
     let mint_payload = NFTAction::Mint {
@@ -103,8 +104,9 @@ async fn burn_test() -> Result<()> {
     let token_metadata = TokenMetadata {
         name: "CryptoKitty".to_string(),
         description: "Description".to_string(),
-        media: "http://".to_string(),
-        reference: "http://".to_string(),
+        image_url: "http://".to_string(),
+        donacion: 100,
+        ong: "WWF".to_string(),
     };
 
     let mint_payload = NFTAction::Mint {
@@ -202,8 +204,9 @@ async fn transfer_test() -> Result<()> {
     let token_metadata = TokenMetadata {
         name: "CryptoKitty".to_string(),
         description: "Description".to_string(),
-        media: "http://".to_string(),
-        reference: "http://".to_string(),
+        image_url: "http://".to_string(),
+        donacion: 100,
+        ong: "WWF".to_string(),
     };
 
     let mint_payload = NFTAction::Mint {
@@ -284,8 +287,9 @@ async fn owner_test() -> Result<()> {
     let token_metadata = TokenMetadata {
         name: "CryptoKitty".to_string(),
         description: "Description".to_string(),
-        media: "http://".to_string(),
-        reference: "http://".to_string(),
+        image_url: "http://".to_string(),
+        donacion: 100,
+        ong: "WWF".to_string(),
     };
 
     let mint_payload = NFTAction::Mint {
@@ -360,8 +364,9 @@ async fn approved() -> Result<()> {
     let token_metadata = TokenMetadata {
         name: "CryptoKitty".to_string(),
         description: "Description".to_string(),
-        media: "http://".to_string(),
-        reference: "http://".to_string(),
+        image_url: "http://".to_string(),
+        donacion: 100,
+        ong: "WWF".to_string(),
     };
 
     let mint_payload = NFTAction::Mint {

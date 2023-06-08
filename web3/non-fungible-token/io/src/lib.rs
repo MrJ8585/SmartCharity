@@ -3,18 +3,69 @@
 use gear_lib::non_fungible_token::{
     io::{NFTApproval, NFTTransfer, NFTTransferPayout},
     royalties::*,
-    state::NFTState,
-    token::*,
 };
 use gmeta::{In, InOut, Metadata};
 use gstd::{prelude::*, ActorId};
-
+use hashbrown::HashSet;
 pub use gear_lib::non_fungible_token::delegated::DelegatedApproveMessage;
 use primitive_types::H256;
 
+
+pub type TokenId = U256;
+
+#[derive(Debug, Default, Decode, Encode, TypeInfo, PartialEq, Eq)]
+pub struct Token {
+    pub id: TokenId,
+    pub owner_id: ActorId,
+    pub name: String,
+    pub description: String,
+    pub media: String,
+    pub reference: String,
+    pub approved_account_ids: BTreeSet<ActorId>,
+}
+
+#[derive(Debug, Default, Encode, Decode, Clone, TypeInfo, PartialEq, Eq, PartialOrd, Ord)]
+pub struct TokenMetadata {
+    // ex. "CryptoKitty #100"
+    pub name: String,
+    // free-form description
+    pub description: String,
+    // URL to associated media, preferably to decentralized, content-addressed storage
+    pub media: String,
+    // URL to an off-chain JSON file with more info.
+    pub reference: String,
+}
+
+
+
 pub struct NFTMetadata;
 
-pub struc miMetaData;
+#[derive(Debug, Default)]
+pub struct NFTState {
+    pub name: String,
+    pub description: String,
+    pub image_url: String,
+    pub donacion: u128,
+    pub ong: String,
+    pub symbol: String,
+    pub base_uri: String,
+    pub owner_by_id: HashMap<TokenId, ActorId>,
+    pub token_approvals: HashMap<TokenId, HashSet<ActorId>>,
+    pub token_metadata_by_id: HashMap<TokenId, Option<TokenMetadata>>,
+    pub tokens_for_owner: HashMap<ActorId, Vec<TokenId>>,
+    pub royalties: Option<Royalties>,
+}
+
+#[derive(Encode, Decode, TypeInfo, Debug, Clone)]
+#[codec(crate = gstd::codec)]
+#[scale_info(crate = gstd::scale_info)]
+pub struct TokenMetadata {
+    pub name: String,
+    pub description: String,
+    pub image_url: String,
+    pub donacion: u128,
+    pub ong: String,
+}
 
 impl Metadata for NFTMetadata {
     type Init = In<InitNFT>;
@@ -25,13 +76,13 @@ impl Metadata for NFTMetadata {
     type State = IoNFT;
 }
 
-#[derive(Debug, Encode, Decode, TypeInfo)]
+#[derive(Encode, Decode, TypeInfo)]
 #[codec(crate = gstd::codec)]
 #[scale_info(crate = gstd::scale_info)]
 pub enum NFTAction {
     Mint {
         transaction_id: u64,
-        token_metadata: TokenMetadataMrJ,
+        token_metadata: TokenMetadata,
     },
     Burn {
         transaction_id: u64,
@@ -108,6 +159,10 @@ pub enum NFTEvent {
 #[scale_info(crate = gstd::scale_info)]
 pub struct IoNFTState {
     pub name: String,
+    pub description: String,
+    pub image_url: String,
+    pub donacion: u128,
+    pub ong: String,
     pub symbol: String,
     pub base_uri: String,
     pub owner_by_id: Vec<(TokenId, ActorId)>,
@@ -131,6 +186,10 @@ impl From<&NFTState> for IoNFTState {
     fn from(value: &NFTState) -> Self {
         let NFTState {
             name,
+            description,
+            image_url,
+            donacion,
+            ong,
             symbol,
             base_uri,
             owner_by_id,
@@ -162,6 +221,10 @@ impl From<&NFTState> for IoNFTState {
 
         Self {
             name: name.clone(),
+            description: description.clone(),
+            image_url: image_url.clone(),
+            donacion: donacion.clone(),
+            ong: ong.clone(),
             symbol: symbol.clone(),
             base_uri: base_uri.clone(),
             owner_by_id,

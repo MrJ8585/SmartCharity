@@ -2,11 +2,24 @@
 
 use gear_lib::non_fungible_token::{
     state::NFTQueryReply,
-    token::{Token, TokenId},
+    token::{TokenId},
 };
 use gmeta::{metawasm, Metadata};
 use gstd::{ActorId, Vec};
 use nft_io::NFTMetadata;
+
+#[derive(Debug, Default, Decode, Encode, TypeInfo, PartialEq, Eq)]
+pub struct Token {
+    pub id: TokenId,
+    pub owner_id: ActorId,
+    pub name: String,
+    pub description: String,
+    pub media: String,
+    pub reference: String,
+    pub approved_account_ids: BTreeSet<ActorId>,
+}
+
+
 
 #[metawasm]
 pub mod metafns {
@@ -15,8 +28,12 @@ pub mod metafns {
     pub fn info(state: State) -> NFTQueryReply {
         NFTQueryReply::NFTInfo {
             name: state.token.name.clone(),
+            description: state.token.description.clone(),
+            image_url: state.token.image_url.clone(),
+            donacion: state.token.donacion.clone(),
+            ong: state.token.ong.clone(),
             symbol: state.token.symbol.clone(),
-            base_uri: state.token.base_uri,
+            base_uri: state.token.base_uri.clone(),
         }
     }
 
@@ -120,10 +137,13 @@ fn token_helper(token_id: &TokenId, state: &<NFTMetadata as Metadata>::State) ->
         .iter()
         .find(|(id, _metadata)| token_id.eq(id))
     {
-        token.name = metadata.name.clone();
-        token.description = metadata.description.clone();
-        token.media = metadata.media.clone();
-        token.reference = metadata.reference.clone();
+        token.name: metadata.name.clone();
+        token.description: metadata.description.clone();
+        token.image_url: metadata.image_url.clone();
+        token.donacion: metadata.donacion.clone();
+        token.ong: metadata.ong.clone();
+        token.symbol: metadata.symbol.clone();
+        token.base_uri: metadata.base_uri.clone();
     }
     token
 }

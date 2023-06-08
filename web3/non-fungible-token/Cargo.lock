@@ -2305,6 +2305,7 @@ dependencies = [
  "gear-lib",
  "gmeta",
  "gstd",
+ "hashbrown 0.13.2",
  "primitive-types",
 ]
 
@@ -2316,6 +2317,7 @@ dependencies = [
  "gear-wasm-builder",
  "gmeta",
  "gstd",
+ "hashbrown 0.13.2",
  "nft-io",
 ]
 

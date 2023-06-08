@@ -1,4 +1,4 @@
-use gear_lib::non_fungible_token::{io::NFTTransfer, nft_core::*, state::*, token::*};
+use gear_lib::non_fungible_token::{io::NFTTransfer, nft_core::*, state::*};
 use gear_lib_derive::{NFTCore, NFTMetaState, NFTStateKeeper};
 use gmeta::Metadata;
 use gstd::{errors::Result as GstdResult, exec, msg, prelude::*, ActorId, MessageId};
@@ -7,6 +7,51 @@ use nft_io::{InitNFT, IoNFT, NFTAction, NFTEvent, NFTMetadata};
 use primitive_types::{H256, U256};
 
 #[derive(Debug, Default, NFTStateKeeper, NFTCore, NFTMetaState)]
+
+#[derive(Debug, Default)]
+pub struct NFTState {
+    pub name: String,
+    pub description: String,
+    pub image_url: String,
+    pub donacion: u128,
+    pub ong: String,
+    pub symbol: String,
+    pub base_uri: String
+    pub owner_by_id: HashMap<TokenId, ActorId>,
+    pub token_approvals: HashMap<TokenId, HashSet<ActorId>>,
+    pub token_metadata_by_id: HashMap<TokenId, Option<TokenMetadata>>,
+    pub tokens_for_owner: HashMap<ActorId, Vec<TokenId>>,
+    pub royalties: Option<Royalties>,
+}
+
+
+pub type TokenId = U256;
+
+#[derive(Debug, Default, Decode, Encode, TypeInfo, PartialEq, Eq)]
+pub struct Token {
+    pub id: TokenId,
+    pub owner_id: ActorId,
+    pub name: String,
+    pub description: String,
+    pub media: String,
+    pub reference: String,
+    pub approved_account_ids: BTreeSet<ActorId>,
+}
+
+#[derive(Debug, Default, Encode, Decode, Clone, TypeInfo, PartialEq, Eq, PartialOrd, Ord)]
+pub struct TokenMetadata {
+    // ex. "CryptoKitty #100"
+    pub name: String,
+    // free-form description
+    pub description: String,
+    // URL to associated media, preferably to decentralized, content-addressed storage
+    pub media: String,
+    // URL to an off-chain JSON file with more info.
+    pub reference: String,
+}
+
+
+
 pub struct Nft {
     #[NFTStateField]
     pub token: NFTState,
@@ -15,10 +60,7 @@ pub struct Nft {
     pub transactions: HashMap<H256, NFTEvent>,
 }
 
-pub struc miMetaData {
-    #[NFTStateField]
-    pub token:
-}
+
 
 static mut CONTRACT: Option<Nft> = None;
 
@@ -31,7 +73,10 @@ unsafe extern "C" fn init() {
     let nft = Nft {
         token: NFTState {
             name: config.name,
-            symbol: config.symbol,
+            description: config.description,
+            image_url: config.image_url,
+            donacion: config.donacion,
+            ong: config.ong,
             base_uri: config.base_uri,
             royalties: config.royalties,
             ..Default::default()
@@ -156,7 +201,7 @@ unsafe extern "C" fn handle() {
     };
 }
 
-pub struct TokenMetadataMrJ {
+pub struct TokenMetadata {
     pub name: String,
     pub description: String,
     pub image_url: String,
@@ -165,11 +210,11 @@ pub struct TokenMetadataMrJ {
 }
 
 pub trait MyNFTCore: NFTCore {
-    fn mint(&mut self, token_metadata: TokenMetadataMrJ) -> NFTTransfer;
+    fn mint(&mut self, token_metadata: TokenMetadata) -> NFTTransfer;
 }
 
 impl MyNFTCore for Nft {
-    fn mint(&mut self, token_metadata: TokenMetadataMrJ) -> NFTTransfer {
+    fn mint(&mut self, token_metadata: TokenMetadata) -> NFTTransfer {
         let transfer = NFTCore::mint(self, &msg::source(), self.token_id, Some(token_metadata));
         self.token_id = self.token_id.saturating_add(U256::one());
         transfer
@@ -251,7 +296,7 @@ impl From<&Nft> for IoNFT {
             .collect();
         Self {
             token: token.into(),
-            token_id: *token_id,
+            token_id: TokenId,
             owner: *owner,
             transactions,
         }
