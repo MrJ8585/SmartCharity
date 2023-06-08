@@ -12,7 +12,7 @@ interface Props {
   fetch: (wallet: any) => void;
 }
 
-function TransferButtonCopy(props: Props) {
+function DeclareBtn(props: Props) {
   const alert = useAlert();
   const toast = useToast();
   const { account, accounts } = useAccount();
@@ -89,9 +89,9 @@ function TransferButtonCopy(props: Props) {
 
   return (
     <Button onClick={() => signer()} background="#37a0ea" color="white">
-      Donate
+      declare
     </Button>
   );
 }
 
-export { TransferButtonCopy };
+export { DeclareBtn };
