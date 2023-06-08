@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import { Home } from "./home";
+import { Home } from "./home/Home";
 import { Organizations } from "./organizations/Oranizations";
 
 const routes = [
