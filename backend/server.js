@@ -92,11 +92,11 @@ app.get("/gastos/company/:wallet", async (req, res) => {
 
 // crear/insertar gastos de una compañía
 app.post("/gastos/company", async (req, res) => {
-  const { companyWallet, quantity, descripcion, titulo, date } = req.body;
+  const { companyWallet, quantity, descripcion, titulo } = req.body;
 
   const { error } = await supabase
     .from("Gastos")
-    .insert({ companyWallet, quantity, descripcion, titulo, date });
+    .insert({ companyWallet, quantity, descripcion, titulo });
 
   if (error) {
     console.log(error);

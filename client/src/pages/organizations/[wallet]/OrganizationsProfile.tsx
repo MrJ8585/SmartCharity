@@ -56,6 +56,8 @@ function OrganizacionProfile() {
   const [dates, setDates] = useState<any>([]);
   const [descriptions, setDescriptions] = useState<any>({});
   const [datesTL, setDatesTL] = useState<any>();
+  const [titles, setTitles] = useState<any>();
+  const [data, setData] = useState<any>();
 
   const fetch = (wallet: any) => {
     axios
@@ -81,9 +83,9 @@ function OrganizacionProfile() {
       });
 
     axios.get(`http://localhost/gastos/company/${wallet}`).then((response) => {
-      console.log("RESPONSE", response);
       setDescriptions(response.data.map((item: any) => item.descripcion));
       setDatesTL(response.data.map((item: any) => item.date));
+      setTitles(response.data.map((item: any) => item.titulo));
     });
   };
 
@@ -318,7 +320,13 @@ function OrganizacionProfile() {
             )}
           </div>
           <Center>
-            <Text fontSize="2xl">{descriptions[value]}</Text>
+            <Flex flexDir="column">
+              <Center>
+                <Heading size="lg">{titles[value]}</Heading>
+              </Center>
+              <Text fontSize="xl">{descriptions[value]}</Text>
+              <Center>{JSON.stringify(data[value], null, 2)}</Center>
+            </Flex>
           </Center>
         </div>
         <Center>

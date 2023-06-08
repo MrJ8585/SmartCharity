@@ -1,30 +1,32 @@
-import { ViewIcon } from "@chakra-ui/icons";
 import axios from "axios";
 import {
   Container,
   Flex,
   Text,
-  Image,
-  Box,
   Center,
   VStack,
-  Card,
-  CardBody,
-  Spacer,
   Input,
   Textarea,
   Button,
-  useStatStyles,
+  Modal,
+  ModalOverlay,
+  ModalBody,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  useDisclosure,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
+import { TransferButton } from "pages/organizations/[wallet]/Transfer";
 
 function Declare() {
   const [title, setTitle] = useState<string>("");
   const [quantity, setQuantity] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [value, onChange] = useState(new Date().toString());
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const handleTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
@@ -40,11 +42,12 @@ function Declare() {
 
   const sendForm = () => {
     axios
-      .post("localhost/gastos/company", {
-        title: title,
+      .post("http://localhost/gastos/company", {
+        companyWallet:
+          "0xb2fe4ca0daa2ca7b3810e52bda5015275e94ffa2ec6c2ff91667c6865833f27c",
+        titulo: title,
         quantity: quantity,
-        description: description,
-        date: value,
+        descripcion: description,
       })
       .then((response) => {
         console.log(response);
@@ -71,15 +74,14 @@ function Declare() {
         borderColor="gray.200"
       >
         <Input
-          //   value={6}
+          value={title}
           //   onChange={handleChange}
           placeholder="Título"
           size="md"
-          type="number"
           onChange={handleTitle}
         />
         <Input
-          //   value={6}
+          value={quantity}
           //   onChange={handleChange}
           placeholder="Cantidad"
           size="md"
@@ -90,22 +92,37 @@ function Declare() {
       <Textarea
         placeholder="Adjunta la descripción de tu declaración aquí"
         onChange={handleDescription}
+        value={description}
       />
       <Flex marginTop={3}>
-        <Calendar
-          onChange={(val) => onChange(val?.toString() ?? new Date().toString())}
-          value={value}
-        />
+        <Button mt={4} onClick={onOpen}>
+          Donate
+        </Button>
       </Flex>
-      <Button
-        colorScheme="facebook"
-        size="sm"
-        marginTop={3}
-        type="submit"
-        onSubmit={sendForm}
-      >
-        Registrar
-      </Button>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader textAlign="center">
+            <VStack alignItems="center">
+              <Text>Donate to</Text>
+              <Text color="#37a0ea">har</Text>
+              {/* <Image src={organization.img} alt="WWF" /> */}
+            </VStack>
+          </ModalHeader>
+          <Center></Center>
+          <ModalCloseButton />
+          <ModalBody>
+            <Center mb={5}>
+              <TransferButton
+                to="5F53x1L7jUNjPaepdSncANp2A22ZvRBWL3GPb9vNQQb2CV63"
+                amount={parseInt(quantity)}
+                onClose={onClose}
+                fetch={sendForm}
+              />
+            </Center>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
     </Container>
   );
 }
