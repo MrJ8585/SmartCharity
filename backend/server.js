@@ -29,6 +29,7 @@ app.post("/donacion", async (req, res) => {
   const { error } = await supabase
     .from("Donacion")
     .insert({ userWallet, companyWallet, quantity, block, date });
+
   if (error) {
     console.log(error);
     res.status(400).send();
@@ -68,6 +69,40 @@ app.post("/donacion/company/wallet", async (req, res) => {
   }
   res.send(data);
 });
+
+app.get("/gastos/company/:wallet", async (req, res) => {
+  const { wallet } = req.params;
+
+  const { data, error } = await supabase
+    .from("Gastos")
+    .select("*")
+    .eq("companyWallet", wallet);
+
+  if (error) {
+    console.log(error);
+    res.status(400).send();
+    return;
+  }
+  res.send(data);
+});
+
+app.post("/gastos/company", async (req, res) => {
+  const { companyWallet, quantity, descripcion, titulo, date } = req.body;
+
+  const { error } = await supabase
+    .from("Gastos")
+    .insert({ companyWallet, quantity, descripcion, titulo, date });
+
+  if (error) {
+    console.log(error);
+    res.status(400).send();
+    return;
+  }
+  res.status(200).send();
+});
+
+// POST gastos
+// GET gastos de compañia
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
