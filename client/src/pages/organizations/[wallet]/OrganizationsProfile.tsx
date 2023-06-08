@@ -31,6 +31,7 @@ import {
   PopoverContent,
   PopoverCloseButton,
   PopoverBody,
+  VStack,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { organizations } from "../Organizations";
@@ -204,24 +205,33 @@ function OrganizacionProfile() {
         <Modal isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
           <ModalContent>
-            <ModalHeader textAlign="center">{`Donate to ${organization.title}`}</ModalHeader>
+            <ModalHeader textAlign="center">
+              <VStack alignItems="center">
+                <Text>Donate to</Text>
+                <Text color="#37a0ea">{organization.title}</Text>
+                <Image src={organization.img} alt="WWF" />
+              </VStack>
+            </ModalHeader>
             <Center>
-              <Input
-                placeholder="$ ####"
-                type="number"
-                width="50%"
-                onChange={handleChange}
-              />
+              <VStack maxW="200px">
+                <Text color="gray.500">
+                  Submit the amount you want to donate to this organization
+                </Text>
+                <Input
+                  placeholder="$ ####"
+                  type="number"
+                  width="80%"
+                  onChange={handleChange}
+                />
+              </VStack>
             </Center>
             <ModalCloseButton />
             <ModalBody>
-              <Center>
+              <Center mb={5}>
                 <TransferButton
-                  // from="0xba939e1c710bf21923a60ef4f9f63f6a8f871b6fa9ebb87c684cb52cf553ef66"
-                  // to={`0x${organization.wallet}`}
                   to={organization.wallet}
-                  // to="0x88cc79086d8490ff9ee727bc666fee8e72e5eb0116446ec4a11454be5a21691c"
                   amount={parseInt(amount)}
+                  onClose={onClose}
                 />
               </Center>
             </ModalBody>
