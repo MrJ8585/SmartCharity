@@ -17,17 +17,26 @@ impl Metadata for FungibleTokenMetadata {
 #[derive(Debug, Decode, Encode, TypeInfo)]
 #[codec(crate = gstd::codec)]
 #[scale_info(crate = gstd::scale_info)]
+
+
 pub struct InitConfig {
     pub name: String,
     pub symbol: String,
     pub decimals: u8,
 }
 
+
+pub struct Ong {
+    pub name: String,
+    pub wallet: ActorId
+}
+
+
 #[derive(Debug, Decode, Encode, TypeInfo)]
 #[codec(crate = gstd::codec)]
 #[scale_info(crate = gstd::scale_info)]
 pub enum FTAction {
-    Mint(u128),
+    Mint(In<Ong>),
     Burn(u128),
     Transfer {
         from: ActorId,
@@ -45,6 +54,8 @@ pub enum FTAction {
 #[derive(Debug, Encode, Decode, TypeInfo)]
 #[codec(crate = gstd::codec)]
 #[scale_info(crate = gstd::scale_info)]
+
+
 pub enum FTEvent {
     Transfer {
         from: ActorId,
@@ -63,6 +74,8 @@ pub enum FTEvent {
 #[derive(Debug, Clone, Default, Encode, Decode, TypeInfo)]
 #[codec(crate = gstd::codec)]
 #[scale_info(crate = gstd::scale_info)]
+
+
 pub struct IoFungibleToken {
     pub name: String,
     pub symbol: String,
