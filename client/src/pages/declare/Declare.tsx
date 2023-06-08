@@ -20,6 +20,8 @@ import React, { useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { TransferButton } from "pages/organizations/[wallet]/Transfer";
+import { TransferButtonCopy } from "pages/organizations/[wallet]/Transfer copy";
+import { useAccount } from "@gear-js/react-hooks";
 
 function Declare() {
   const [title, setTitle] = useState<string>("");
@@ -27,6 +29,7 @@ function Declare() {
   const [description, setDescription] = useState<string>("");
   const [value, onChange] = useState(new Date().toString());
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { account, accounts } = useAccount();
 
   const handleTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
@@ -40,14 +43,16 @@ function Declare() {
     setDescription(event.target.value);
   };
 
-  const sendForm = () => {
+  const sendForm = (blockId: any) => {
+    console.log(blockId);
     axios
-      .post("http://localhost/gastos/company", {
+      .post("http://localhost:80/gastos/company", {
         companyWallet:
           "0xb2fe4ca0daa2ca7b3810e52bda5015275e94ffa2ec6c2ff91667c6865833f27c",
         titulo: title,
         quantity: quantity,
         descripcion: description,
+        bloque: blockId,
       })
       .then((response) => {
         console.log(response);
@@ -112,11 +117,12 @@ function Declare() {
           <ModalCloseButton />
           <ModalBody>
             <Center mb={5}>
-              <TransferButton
-                to="5F53x1L7jUNjPaepdSncANp2A22ZvRBWL3GPb9vNQQb2CV63"
+              <TransferButtonCopy
+                to="0xb2fe4ca0daa2ca7b3810e52bda5015275e94ffa2ec6c2ff91667c6865833f27c"
                 amount={parseInt(quantity)}
                 onClose={onClose}
                 fetch={sendForm}
+                from={account!.address}
               />
             </Center>
           </ModalBody>

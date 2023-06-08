@@ -34,7 +34,7 @@ function Badge({ title, imgSrc }: any) {
     <Card maxW="150px">
       <CardBody>
         <VStack alignItems="center">
-          <Image src={imgSrc} boxSize="80%" borderRadius="full" />
+          <Image src={imgSrc} boxSize="80%" borderRadius="full" />{" "}
           <Text>{title}</Text>
         </VStack>
       </CardBody>
@@ -47,7 +47,7 @@ function DonationRecord({ title, wallet, amount, date, imgSrc }: any) {
     <Card width="700px">
       <CardBody>
         <Flex alignItems="center" justifyContent="flex-start" gap="2em">
-          <Image src={imgSrc} boxSize="60px" />
+          <Image src={imgSrc} boxSize="60px" objectFit="cover" />
           <VStack alignItems="flex-start" fontWeight="light">
             <Flex alignItems="center" gap="2em">
               <Text fontSize="lg" fontWeight="semibold">
