@@ -1,3 +1,4 @@
+import { ViewIcon } from "@chakra-ui/icons";
 import {
   Card,
   Image,
@@ -12,7 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 
-const organizations = [
+export const organizations = [
   {
     title: "4 PATAS",
     wallet: "5FA57NG5AcDDyRuXCWLcSXMAPrWZQZmfBtQxVeUNbhawWGHw",
@@ -67,9 +68,12 @@ function OrganizationCard({ title, wallet, img }: any) {
           </Center>
           <Spacer />
           <Center>
-            <Button colorScheme="facebook" size="sm">
-              <Link to="/organizations">View Organizacion</Link>
-            </Button>
+            <Link to={`/organizations/${wallet}`}>
+              <Button colorScheme="facebook" size="sm">
+                View Organizacion
+                <ViewIcon marginLeft="10px" />
+              </Button>
+            </Link>
           </Center>
         </Flex>
       </Flex>
@@ -82,7 +86,11 @@ function Organizations() {
     <Container maxW="container.lg" marginTop="10px">
       <VStack spacing="1em">
         {organizations.map((organization) => (
-          <OrganizationCard title={organization.title} img={organization.img} />
+          <OrganizationCard
+            title={organization.title}
+            img={organization.img}
+            wallet={organization.wallet}
+          />
         ))}
       </VStack>
     </Container>

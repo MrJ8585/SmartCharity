@@ -2,21 +2,15 @@
 
 import { Route, Routes } from "react-router-dom";
 import { Home } from "./home/Home";
-import { Organizations } from "./organizations/Oranizations";
+import { Organizations } from "./organizations/Organizations";
 import { Profile } from "./profile/Profile";
-import { OrgnizationWWF } from "./OrgWwf";
-import { OrgnizationCp } from "./OrgCp";
-import { OrgnizationDsf } from "./OrgDsf";
-import { OrgnizationOnu } from "./OrgOnu";
+import { OrganizacionProfile } from "./organizations/[wallet]/OrganizationsProfile";
 
 const routes = [
   { path: "/home", Page: Home },
   { path: "/organizations", Page: Organizations },
+  { path: "/organizations/:id", Page: OrganizacionProfile },
   { path: "/profile", Page: Profile },
-  { path: "/org/wwf", Page: OrgnizationWWF },
-  { path: "/org/4patas", Page: OrgnizationCp },
-  { path: "/org/doctorswithoutborders", Page: OrgnizationDsf },
-  { path: "/org/unitednations", Page: OrgnizationOnu },
 ];
 
 function Routing() {

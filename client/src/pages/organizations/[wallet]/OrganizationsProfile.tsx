@@ -24,12 +24,13 @@ import {
   ModalCloseButton,
 } from "@chakra-ui/react";
 import { useState } from "react";
-// @ts-ignore
+import { Organizations } from "../Organizations";
+//@ts-ignore
 import HorizontalTimeline from "react-horizontal-timeline";
-import { TransferButton } from "./Transfer";
 import Chart from "react-apexcharts";
+import { TransferButton } from "./Transfer";
 
-function OrgnizationCp() {
+function OrganizacionProfile() {
   const [value, setValue] = useState(0);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [previous, setPrevious] = useState(0);
@@ -186,4 +187,4 @@ function OrgnizationCp() {
   );
 }
 
-export { OrgnizationCp };
+export { OrganizacionProfile };
