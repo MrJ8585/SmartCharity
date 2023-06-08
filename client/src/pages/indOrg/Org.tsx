@@ -168,6 +168,7 @@ function Orgnization() {
               <TransferButton
                 from="0xba939e1c710bf21923a60ef4f9f63f6a8f871b6fa9ebb87c684cb52cf553ef66"
                 to="0xd6d8fa0cedb0d42900585a8e2e086eee2f65adb5e2985f373dae10fab6b97377"
+                amount={100}
               />
             </ModalBody>
 
