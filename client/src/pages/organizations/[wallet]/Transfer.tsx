@@ -1,15 +1,18 @@
 import { useAccount, useApi, useAlert } from "@gear-js/react-hooks";
 import { web3FromSource } from "@polkadot/extension-dapp";
 import { decodeAddress, getProgramMetadata } from "@gear-js/api";
-import { Button } from "@gear-js/ui";
+import { Button, useToast } from "@chakra-ui/react";
+import axios from "axios";
 
 interface Props {
   to: string;
   amount: number;
+  onClose: () => void;
 }
 
 function TransferButton(props: Props) {
   const alert = useAlert();
+  const toast = useToast();
   const { account, accounts } = useAccount();
   const { api } = useApi();
 
@@ -53,15 +56,37 @@ function TransferButton(props: Props) {
           accounts[0].address,
           { signer: injector.signer },
           ({ status }) => {
+            console.log(accounts);
+
+            const postDonation = {
+              userWallet: accounts[0].address,
+              companyWallet: props.to,
+              quantity: props.amount,
+              block: status.asInBlock.toString(),
+              date: new Date(),
+            };
+            axios
+              .post("http://localhost:80/donacion", postDonation)
+              .then((res) => {
+                console.log(res);
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+
+            console.log(status);
             if (status.isInBlock) {
-              console.log(
-                `Completed at block hash #${status.asInBlock.toString()}`
-              );
-              alert.success(`Block hash #${status.asInBlock.toString()}`);
+              toast({
+                title: "Account created.",
+                description: "We've successfully made the donation for you.",
+                status: "success",
+                duration: 9000,
+                isClosable: true,
+              });
+              // alert.success(`Block hash #${status.asInBlock.toString()}`);
             } else {
-              console.log(`Current status: ${status.type}`);
               if (status.type === "Finalized") {
-                alert.success(status.type);
+                // alert.success(status.type);
               }
             }
           }
@@ -72,9 +97,14 @@ function TransferButton(props: Props) {
     } else {
       alert.error("Account not available to sign");
     }
+    props.onClose();
   };
 
-  return <Button text="Donar" onClick={() => signer()} />;
+  return (
+    <Button onClick={() => signer()} background="#37a0ea" color="white">
+      Donate
+    </Button>
+  );
 }
 
 export { TransferButton };
