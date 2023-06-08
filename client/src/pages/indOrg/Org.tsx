@@ -14,8 +14,22 @@ import {
   Box,
   Grid,
 } from "@chakra-ui/react";
+import { useState } from "react";
+// @ts-ignore
+import HorizontalTimeline from "react-horizontal-timeline";
 
 function Orgnization() {
+  const [value, setValue] = useState(0);
+  const [previous, setPrevious] = useState(0);
+
+  const VALUES = ["2021-01-01", "2021-01-15", "2021-03-22"];
+
+  const description = [
+    "The event of 1 Jan 2021 : Happy New Year",
+    "The event of 15 Jan 2021 : Festival",
+    "The event of 22 March 2021 : Board Exam",
+  ];
+
   return (
     <Container w="90%" maxW="container.xl">
       <Flex flexDir="column" my={4}>
@@ -118,6 +132,27 @@ function Orgnization() {
             </Card>
           </Grid>
         </Flex>
+        <Center>
+          <Heading size="xl" my={4}>
+            Donation timeline
+          </Heading>
+        </Center>
+        <div className="root-div">
+          <div style={{ width: "60%", height: "100px", margin: "0 auto" }}>
+            <HorizontalTimeline
+              styles={{ outline: "#96CFF7", foreground: "#37a0ea" }}
+              index={value}
+              indexClick={(index: any) => {
+                setValue(index);
+                setPrevious(value);
+              }}
+              values={VALUES}
+            />
+          </div>
+          <Center>
+            <Text fontSize="2xl">{description[value]}</Text>
+          </Center>
+        </div>
       </Flex>
     </Container>
   );
