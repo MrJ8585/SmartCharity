@@ -27,8 +27,9 @@ import { useState } from "react";
 // @ts-ignore
 import HorizontalTimeline from "react-horizontal-timeline";
 import { TransferButton } from "./Transfer";
+import Chart from "react-apexcharts";
 
-function Orgnization() {
+function OrgnizationCp() {
   const [value, setValue] = useState(0);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [previous, setPrevious] = useState(0);
@@ -41,12 +42,24 @@ function Orgnization() {
     "The event of 22 March 2021 : Board Exam",
   ];
 
+  const series = [
+    {
+      name: "Guests",
+      data: [19, 22, 20, 26],
+    },
+  ];
+  const options = {
+    xaxis: {
+      categories: ["2019-05-01", "2019-05-02", "2019-05-03", "2019-05-04"],
+    },
+  };
+
   return (
     <Container w="90%" maxW="container.xl">
       <Flex flexDir="column" my={4}>
         <Center>
           <Heading size="4xl" mb={2}>
-            World Wildlife Fund
+            4 Patas
           </Heading>
         </Center>
         <Flex>
@@ -54,7 +67,7 @@ function Orgnization() {
             {/* Image and */}
             <Center>
               <Image
-                src="https://assets.stickpng.com/images/58568d4c4f6ae202fedf2721.png"
+                src="https://d3ugyf2ht6aenh.cloudfront.net/stores/188/849/themes/common/logo-1866482157-1574635760-6cf4fcbbca71b55a01145347adaf5bde1574635760.png?0"
                 alt="WWF"
               />
             </Center>
@@ -93,60 +106,22 @@ function Orgnization() {
               </CardBody>
             </Card>
             {/* NFTS */}
-            <Card>
+            <Card justify="center" align="center">
               <CardBody>
-                <Heading size="md">NFTs</Heading>
+                <Heading size="md">FTs</Heading>
+                <Center height="90%">
+                  <Text fontSize="lg" color="gray">
+                    This organization doesn't offer FTs
+                  </Text>
+                </Center>
               </CardBody>
-
-              <Box overflow="auto" maxHeight="400px">
-                <Stack spacing={2}>
-                  <Card
-                    direction={{ base: "column", sm: "row" }}
-                    overflow="hidden"
-                    variant="outline"
-                    m={4}
-                  >
-                    <Image
-                      objectFit="cover"
-                      maxW={{ base: "100%", sm: "200px" }}
-                      src="https://images.unsplash.com/photo-1667489022797-ab608913feeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw5fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=800&q=60"
-                      alt="Caffe Latte"
-                    />
-                    <Center>
-                      <CardBody>
-                        <Heading size="md">The perfect latte</Heading>
-                        <Text fontSize="sm">First Tier</Text>
-                      </CardBody>
-                    </Center>
-                  </Card>
-                  <Card
-                    direction={{ base: "column", sm: "row" }}
-                    overflow="hidden"
-                    variant="outline"
-                    m={4}
-                  >
-                    <Image
-                      objectFit="cover"
-                      maxW={{ base: "100%", sm: "200px" }}
-                      src="https://images.unsplash.com/photo-1667489022797-ab608913feeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw5fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=800&q=60"
-                      alt="Caffe Latte"
-                    />
-                    <Center>
-                      <CardBody>
-                        <Heading size="md">The perfect latte</Heading>
-                        <Text fontSize="sm">First Tier</Text>
-                      </CardBody>
-                    </Center>
-                  </Card>
-                </Stack>
-              </Box>
             </Card>
           </Grid>
         </Flex>
         <Center>
           <Flex flexDir="column">
             <Button mt={4} onClick={onOpen}>
-              Open Modal
+              Donate
             </Button>
             <Box>
               <Heading size="xl" my={4}>
@@ -196,9 +171,19 @@ function Orgnization() {
             <Text fontSize="2xl">{description[value]}</Text>
           </Center>
         </div>
+        <Center>
+          <Flex flexDir="column">
+            <Center>
+              <Heading size="xl" mt={10}>
+                Budget timeline
+              </Heading>
+            </Center>
+            <Chart type="line" series={series} options={options} width={600} />
+          </Flex>
+        </Center>
       </Flex>
     </Container>
   );
 }
 
-export { Orgnization };
+export { OrgnizationCp };
