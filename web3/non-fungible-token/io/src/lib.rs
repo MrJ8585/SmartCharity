@@ -3,40 +3,13 @@
 use gear_lib::non_fungible_token::{
     io::{NFTApproval, NFTTransfer, NFTTransferPayout},
     royalties::*,
+    token::*,
 };
 use gmeta::{In, InOut, Metadata};
 use gstd::{prelude::*, ActorId};
 use hashbrown::HashSet;
 pub use gear_lib::non_fungible_token::delegated::DelegatedApproveMessage;
 use primitive_types::H256;
-
-
-pub type TokenId = U256;
-
-#[derive(Debug, Default, Decode, Encode, TypeInfo, PartialEq, Eq)]
-pub struct Token {
-    pub id: TokenId,
-    pub owner_id: ActorId,
-    pub name: String,
-    pub description: String,
-    pub media: String,
-    pub reference: String,
-    pub approved_account_ids: BTreeSet<ActorId>,
-}
-
-#[derive(Debug, Default, Encode, Decode, Clone, TypeInfo, PartialEq, Eq, PartialOrd, Ord)]
-pub struct TokenMetadata {
-    // ex. "CryptoKitty #100"
-    pub name: String,
-    // free-form description
-    pub description: String,
-    // URL to associated media, preferably to decentralized, content-addressed storage
-    pub media: String,
-    // URL to an off-chain JSON file with more info.
-    pub reference: String,
-}
-
-
 
 pub struct NFTMetadata;
 
