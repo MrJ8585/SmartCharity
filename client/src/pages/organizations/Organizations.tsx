@@ -76,7 +76,7 @@ function OrganizationCard({ title, wallet, img, numberDonations }: any) {
           <Center>
             <Link to={`/organizations/${wallet}`}>
               <Button colorScheme="facebook" size="sm">
-                View Organizacion
+                View Organization
                 <ViewIcon marginLeft="10px" />
               </Button>
             </Link>
