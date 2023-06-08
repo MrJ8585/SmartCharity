@@ -13,13 +13,24 @@ import {
   StackDivider,
   Box,
   Grid,
+  useDisclosure,
+  Button,
+  Modal,
+  ModalOverlay,
+  ModalFooter,
+  ModalBody,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
 } from "@chakra-ui/react";
 import { useState } from "react";
 // @ts-ignore
 import HorizontalTimeline from "react-horizontal-timeline";
+import { TransferButton } from "./Transfer";
 
 function Orgnization() {
   const [value, setValue] = useState(0);
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const [previous, setPrevious] = useState(0);
 
   const VALUES = ["2021-01-01", "2021-01-15", "2021-03-22"];
@@ -133,10 +144,41 @@ function Orgnization() {
           </Grid>
         </Flex>
         <Center>
-          <Heading size="xl" my={4}>
-            Donation timeline
-          </Heading>
+          <Flex flexDir="column">
+            <Button mt={4} onClick={onOpen}>
+              Open Modal
+            </Button>
+            <Box>
+              <Heading size="xl" my={4}>
+                Donation timeline
+              </Heading>
+              <Text size="md" my={4}>
+                Here you can see why the ONG needs the donations
+              </Text>
+            </Box>
+          </Flex>
         </Center>
+
+        <Modal isOpen={isOpen} onClose={onClose}>
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>Modal Title</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>
+              <TransferButton
+                from="0xba939e1c710bf21923a60ef4f9f63f6a8f871b6fa9ebb87c684cb52cf553ef66"
+                to="0xd6d8fa0cedb0d42900585a8e2e086eee2f65adb5e2985f373dae10fab6b97377"
+              />
+            </ModalBody>
+
+            <ModalFooter>
+              <Button colorScheme="blue" mr={3} onClick={onClose}>
+                Close
+              </Button>
+              <Button variant="ghost">Secondary Action</Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
         <div className="root-div">
           <div style={{ width: "60%", height: "100px", margin: "0 auto" }}>
             <HorizontalTimeline

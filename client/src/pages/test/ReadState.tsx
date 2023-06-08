@@ -40,7 +40,7 @@ function ReadState() {
       <center>Full State</center>
       <center className="state">
         State
-        <p className="text"> {JSON.stringify(fullState)}</p>
+        <p className="text"> {JSON.stringify(fullState, null, 2)}</p>
       </center>
       <Button text="Get Full State" onClick={getState} />
     </div>
