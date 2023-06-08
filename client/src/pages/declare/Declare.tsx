@@ -105,8 +105,7 @@ function Declare() {
           <ModalHeader textAlign="center">
             <VStack alignItems="center">
               <Text>Donate to</Text>
-              <Text color="#37a0ea">har</Text>
-              {/* <Image src={organization.img} alt="WWF" /> */}
+              <Text color="#37a0ea">Needed people</Text>
             </VStack>
           </ModalHeader>
           <Center></Center>

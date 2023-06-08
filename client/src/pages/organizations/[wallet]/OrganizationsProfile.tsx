@@ -57,7 +57,7 @@ function OrganizacionProfile() {
   const [descriptions, setDescriptions] = useState<any>({});
   const [datesTL, setDatesTL] = useState<any>();
   const [titles, setTitles] = useState<any>();
-  const [data, setData] = useState<any>();
+  const [quantity, setQuantity] = useState<any>(0);
 
   const fetch = (wallet: any) => {
     axios
@@ -83,9 +83,14 @@ function OrganizacionProfile() {
       });
 
     axios.get(`http://localhost/gastos/company/${wallet}`).then((response) => {
-      setDescriptions(response.data.map((item: any) => item.descripcion));
-      setDatesTL(response.data.map((item: any) => item.date));
-      setTitles(response.data.map((item: any) => item.titulo));
+      const data = response.data;
+      const descriptions = data.map((item: any) => item.descripcion);
+      const datesTL = data.map((item: any) => item.date);
+      const qty = data.map((item: any) => item.quantity);
+
+      setDescriptions(descriptions);
+      setDatesTL(datesTL);
+      setQuantity(qty);
     });
   };
 
@@ -140,7 +145,6 @@ function OrganizacionProfile() {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setAmount(event.target.value);
   };
-
   return (
     <Container w="90%" maxW="container.xl">
       <Flex flexDir="column" my={4}>
@@ -322,10 +326,9 @@ function OrganizacionProfile() {
           <Center>
             <Flex flexDir="column">
               <Center>
-                <Heading size="lg">{titles[value]}</Heading>
+                <Heading size="lg">${quantity[value]}</Heading>
               </Center>
               <Text fontSize="xl">{descriptions[value]}</Text>
-              <Center>{JSON.stringify(data[value], null, 2)}</Center>
             </Flex>
           </Center>
         </div>
