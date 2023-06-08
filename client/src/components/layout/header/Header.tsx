@@ -5,8 +5,17 @@ import {
   Center,
   ButtonGroup,
   Button,
+  useColorMode,
+  useColorModeValue,
 } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+import {
+  MoonIcon,
+  CalendarIcon,
+  HamburgerIcon,
+  AtSignIcon,
+} from "@chakra-ui/icons";
 import { Account } from "./account";
 // Kaiku Manga
 
@@ -14,34 +23,74 @@ type Pages = "home" | "organizations" | "profile";
 
 type Props = {
   isAccountVisible: boolean;
-  selectedPage?: Pages;
 };
 
-function HeaderBtn({ title, route }: any) {
+function HeaderBtn({ title, route, selected, icon }: any) {
   return (
-    <Button variant="outline" color="white">
-      <Link to={route}>{title}</Link>
-    </Button>
+    <Link to={route}>
+      <Button
+        variant="outline"
+        background={selected ? "#37a0ea" : ""}
+        color={selected ? "white" : ""}
+      >
+        {icon}
+        <Text marginLeft="5px">{title}</Text>
+      </Button>
+    </Link>
   );
 }
 
-function Header({ isAccountVisible, selectedPage }: Props) {
+function Header({ isAccountVisible }: Props) {
+  const { toggleColorMode } = useColorMode();
+  const [selectedPage, setSelectedPage] = useState<Pages>("home");
+  const location = useLocation();
+  const bottomBorder = useColorModeValue("#e2e8f0", "#e2e8f0");
+
+  useEffect(() => {
+    const url = location.pathname;
+    if (url.includes("home")) {
+      setSelectedPage("home");
+    } else if (url.includes("organizations")) {
+      setSelectedPage("organizations");
+    } else if (url.includes("profile")) {
+      setSelectedPage("profile");
+    }
+  }, [location]);
+
   return (
-    <Flex background="black" padding="10px 30px">
+    <Flex padding="10px 30px" borderBottom="1px" borderColor={bottomBorder}>
       <Center>
-        <Text fontSize="3xl" color="white">
+        <Text fontSize="3xl" color="#37a0ea" fontWeight="bold">
           SmartCharity
         </Text>
       </Center>
       <Spacer />
       <Center>
         <ButtonGroup>
-          <HeaderBtn title="Home" route="/home" />
-          <HeaderBtn title="Organizations" route="/organizations" />
-          <HeaderBtn title="Profile" route="/profile" />
+          <HeaderBtn
+            title="Home"
+            route="/home"
+            icon={<CalendarIcon />}
+            selected={selectedPage === "home"}
+          />
+          <HeaderBtn
+            title="Organizations"
+            route="/organizations"
+            icon={<HamburgerIcon />}
+            selected={selectedPage === "organizations"}
+          />
+          <HeaderBtn
+            title="Profile"
+            route="/profile"
+            icon={<AtSignIcon />}
+            selected={selectedPage === "profile"}
+          />
         </ButtonGroup>
       </Center>
       <Spacer />
+      <Button onClick={toggleColorMode} marginRight="1em">
+        <MoonIcon />
+      </Button>
       {isAccountVisible && <Account />}
     </Flex>
   );

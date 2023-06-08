@@ -1,15 +1,12 @@
 import { Route, Routes } from "react-router-dom";
-import { Home } from "./home";
-import { Profile } from "./profile";
-import { Orgnization } from "./indOrg";
-import { ReadState } from "./test";
+import { Home } from "./home/Home";
+import { Organizations } from "./organizations/Oranizations";
+import { Profile } from "./profile/Profile";
 
 const routes = [
   { path: "/home", Page: Home },
-  { path: "/organizations", Page: Home },
+  { path: "/organizations", Page: Organizations },
   { path: "/profile", Page: Profile },
-  { path: "/org/id", Page: Orgnization },
-  { path: "/test", Page: ReadState },
 ];
 
 function Routing() {

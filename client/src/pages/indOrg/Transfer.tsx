@@ -75,7 +75,7 @@ function TransferButton(props: Props) {
     }
   };
 
-  return <Button text="Send Message and sing" onClick={() => signer()} />;
+  return <Button text="Donar" onClick={() => signer()} />;
 }
 
 export { TransferButton };
