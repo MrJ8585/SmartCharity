@@ -1,10 +1,11 @@
+/** @format */
+
 import { useAccount, useApi, useAlert } from "@gear-js/react-hooks";
 import { web3FromSource } from "@polkadot/extension-dapp";
 import { decodeAddress, getProgramMetadata } from "@gear-js/api";
 import { Button } from "@gear-js/ui";
 
 interface Props {
-  from: string;
   to: string;
   amount: number;
 }
@@ -28,7 +29,7 @@ function TransferButton(props: Props) {
     destination: programIDFT, // programId
     payload: {
       transfer: [
-        decodeAddress(props.from),
+        decodeAddress(account!.decodedAddress),
         decodeAddress(props.to),
         props.amount,
       ],
