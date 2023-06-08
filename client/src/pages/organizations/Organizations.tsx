@@ -13,7 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 
-export const organizations = [
+const organizations = [
   {
     title: "4 PATAS",
     wallet: "5FA57NG5AcDDyRuXCWLcSXMAPrWZQZmfBtQxVeUNbhawWGHw",
@@ -97,4 +97,4 @@ function Organizations() {
   );
 }
 
-export { Organizations };
+export { Organizations, organizations };

@@ -23,17 +23,24 @@ import {
   ModalHeader,
   ModalCloseButton,
 } from "@chakra-ui/react";
-import { useState } from "react";
-import { Organizations } from "../Organizations";
+import { useEffect, useState } from "react";
+import { organizations } from "../Organizations";
 //@ts-ignore
 import HorizontalTimeline from "react-horizontal-timeline";
 import Chart from "react-apexcharts";
 import { TransferButton } from "./Transfer";
+import { useParams } from "react-router-dom";
 
 function OrganizacionProfile() {
   const [value, setValue] = useState(0);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [previous, setPrevious] = useState(0);
+  const [organization, setOrganization] = useState<any>({});
+  const { id } = useParams();
+
+  useEffect(() => {
+    setOrganization(organizations.find((org) => org.wallet === id));
+  }, [value]);
 
   const VALUES = ["2021-01-01", "2021-01-15", "2021-03-22"];
 
@@ -60,17 +67,14 @@ function OrganizacionProfile() {
       <Flex flexDir="column" my={4}>
         <Center>
           <Heading size="4xl" mb={2}>
-            4 Patas
+            {organization.title}
           </Heading>
         </Center>
         <Flex>
           <Grid templateColumns={{ base: "1fr", sm: "1fr 1fr 1fr" }} gap={4}>
             {/* Image and */}
             <Center>
-              <Image
-                src="https://d3ugyf2ht6aenh.cloudfront.net/stores/188/849/themes/common/logo-1866482157-1574635760-6cf4fcbbca71b55a01145347adaf5bde1574635760.png?0"
-                alt="WWF"
-              />
+              <Image src={organization.img} alt="WWF" />
             </Center>
             {/* Reports */}
             <Card>
