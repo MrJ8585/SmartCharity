@@ -1,11 +1,12 @@
 import { Route, Routes } from "react-router-dom";
 import { Home } from "./home/Home";
 import { Organizations } from "./organizations/Oranizations";
+import { Profile } from "./profile/Profile";
 
 const routes = [
   { path: "/home", Page: Home },
   { path: "/organizations", Page: Organizations },
-  { path: "/profile", Page: Home },
+  { path: "/profile", Page: Profile },
 ];
 
 function Routing() {
