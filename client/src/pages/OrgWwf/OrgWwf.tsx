@@ -1,3 +1,5 @@
+/** @format */
+
 import {
   Container,
   Flex,
@@ -22,6 +24,7 @@ import {
   ModalContent,
   ModalHeader,
   ModalCloseButton,
+  Input,
 } from "@chakra-ui/react";
 import { useState } from "react";
 // @ts-ignore
@@ -53,6 +56,7 @@ function OrgnizationWWF() {
       categories: ["2019-05-01", "2019-05-02", "2019-05-03", "2019-05-04"],
     },
   };
+  const [inputValue, setInputValue] = useState(0);
 
   return (
     <Container w="90%" maxW="container.xl">
@@ -243,12 +247,19 @@ function OrgnizationWWF() {
           <ModalOverlay />
           <ModalContent>
             <ModalHeader>Modal Title</ModalHeader>
+            <Center>
+              <Text>Cantidad a donar</Text>
+            </Center>
+            <Input
+              value={inputValue}
+              onChange={(e: any) => setInputValue(e.target.value)}
+              placeholder="Ingrese un monto"
+            />
             <ModalCloseButton />
             <ModalBody>
               <TransferButton
-                from="0xba939e1c710bf21923a60ef4f9f63f6a8f871b6fa9ebb87c684cb52cf553ef66"
                 to="0xd6d8fa0cedb0d42900585a8e2e086eee2f65adb5e2985f373dae10fab6b97377"
-                amount={100}
+                amount={inputValue}
               />
             </ModalBody>
 
