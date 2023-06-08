@@ -3,7 +3,10 @@
   "version": "0.1.1",
   "private": true,
   "dependencies": {
-    "@gear-js/api": "^0.31.2",
+    "@chakra-ui/react": "^2.7.0",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@gear-js/api": "0.31.2",
     "@gear-js/react-hooks": "0.5.18",
     "@gear-js/ui": "0.5.19",
     "@mantine/form": "6.0.8",
@@ -18,13 +21,17 @@
     "@testing-library/user-event": "13.5.0",
     "@types/jest": "27.5.1",
     "@types/node": "18.15.11",
-    "@types/react": "18.0.37",
+    "@types/react": "^18.2.9",
     "@types/react-dom": "18.0.11",
+    "apexcharts": "^3.41.0",
     "assert": "2.0.0",
     "buffer": "6.0.3",
     "clsx": "1.2.1",
+    "framer-motion": "^10.12.16",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-horizontal-timeline": "^1.5.3",
+    "react-icons": "^4.9.0",
     "react-router-dom": "6.10.0",
     "react-scripts": "5.0.1",
     "react-transition-group": "4.4.5",
@@ -37,9 +44,6 @@
     "build": "react-app-rewired build",
     "test": "react-app-rewired test",
     "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
   },
   "browserslist": {
     "production": [
