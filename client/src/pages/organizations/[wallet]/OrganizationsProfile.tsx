@@ -1,5 +1,3 @@
-/** @format */
-
 import {
   Container,
   Flex,
@@ -24,17 +22,25 @@ import {
   ModalContent,
   ModalHeader,
   ModalCloseButton,
-  Input,
 } from "@chakra-ui/react";
-import { useState } from "react";
-// @ts-ignore
+import { useEffect, useState } from "react";
+import { organizations } from "../Organizations";
+//@ts-ignore
 import HorizontalTimeline from "react-horizontal-timeline";
+import Chart from "react-apexcharts";
 import { TransferButton } from "./Transfer";
+import { useParams } from "react-router-dom";
 
-function Orgnization() {
+function OrganizacionProfile() {
   const [value, setValue] = useState(0);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [previous, setPrevious] = useState(0);
+  const [organization, setOrganization] = useState<any>({});
+  const { id } = useParams();
+
+  useEffect(() => {
+    setOrganization(organizations.find((org) => org.wallet === id));
+  }, [value]);
 
   const VALUES = ["2021-01-01", "2021-01-15", "2021-03-22"];
 
@@ -44,24 +50,31 @@ function Orgnization() {
     "The event of 22 March 2021 : Board Exam",
   ];
 
-  const [inputValue, setInputValue] = useState(0);
+  const series = [
+    {
+      name: "Guests",
+      data: [19, 22, 20, 26],
+    },
+  ];
+  const options = {
+    xaxis: {
+      categories: ["2019-05-01", "2019-05-02", "2019-05-03", "2019-05-04"],
+    },
+  };
 
   return (
     <Container w="90%" maxW="container.xl">
       <Flex flexDir="column" my={4}>
         <Center>
           <Heading size="4xl" mb={2}>
-            World Wildlife Fund
+            {organization.title}
           </Heading>
         </Center>
         <Flex>
           <Grid templateColumns={{ base: "1fr", sm: "1fr 1fr 1fr" }} gap={4}>
             {/* Image and */}
             <Center>
-              <Image
-                src="https://assets.stickpng.com/images/58568d4c4f6ae202fedf2721.png"
-                alt="WWF"
-              />
+              <Image src={organization.img} alt="WWF" />
             </Center>
             {/* Reports */}
             <Card>
@@ -98,58 +111,22 @@ function Orgnization() {
               </CardBody>
             </Card>
             {/* NFTS */}
-            <Card>
+            <Card justify="center" align="center">
               <CardBody>
-                <Heading size="md">NFTs</Heading>
+                <Heading size="md">FTs</Heading>
+                <Center height="90%">
+                  <Text fontSize="lg" color="gray">
+                    This organization doesn't offer FTs
+                  </Text>
+                </Center>
               </CardBody>
-
-              <Box overflow="auto" maxHeight="400px">
-                <Stack spacing={2}>
-                  <Card
-                    direction={{ base: "column", sm: "row" }}
-                    overflow="hidden"
-                    variant="outline"
-                    m={4}>
-                    <Image
-                      objectFit="cover"
-                      maxW={{ base: "100%", sm: "200px" }}
-                      src="https://images.unsplash.com/photo-1667489022797-ab608913feeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw5fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=800&q=60"
-                      alt="Caffe Latte"
-                    />
-                    <Center>
-                      <CardBody>
-                        <Heading size="md">The perfect latte</Heading>
-                        <Text fontSize="sm">First Tier</Text>
-                      </CardBody>
-                    </Center>
-                  </Card>
-                  <Card
-                    direction={{ base: "column", sm: "row" }}
-                    overflow="hidden"
-                    variant="outline"
-                    m={4}>
-                    <Image
-                      objectFit="cover"
-                      maxW={{ base: "100%", sm: "200px" }}
-                      src="https://images.unsplash.com/photo-1667489022797-ab608913feeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw5fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=800&q=60"
-                      alt="Caffe Latte"
-                    />
-                    <Center>
-                      <CardBody>
-                        <Heading size="md">The perfect latte</Heading>
-                        <Text fontSize="sm">First Tier</Text>
-                      </CardBody>
-                    </Center>
-                  </Card>
-                </Stack>
-              </Box>
             </Card>
           </Grid>
         </Flex>
         <Center>
           <Flex flexDir="column">
             <Button mt={4} onClick={onOpen}>
-              Open Modal
+              Donate
             </Button>
             <Box>
               <Heading size="xl" my={4}>
@@ -166,19 +143,12 @@ function Orgnization() {
           <ModalOverlay />
           <ModalContent>
             <ModalHeader>Modal Title</ModalHeader>
-            <Center>
-              <Text>Cantidad a donar</Text>
-            </Center>
-            <Input
-              value={inputValue}
-              onChange={(e: any) => setInputValue(e.target.value)}
-              placeholder="Ingrese un monto"
-            />
             <ModalCloseButton />
             <ModalBody>
               <TransferButton
+                from="0xba939e1c710bf21923a60ef4f9f63f6a8f871b6fa9ebb87c684cb52cf553ef66"
                 to="0xd6d8fa0cedb0d42900585a8e2e086eee2f65adb5e2985f373dae10fab6b97377"
-                amount={inputValue}
+                amount={100}
               />
             </ModalBody>
 
@@ -206,9 +176,19 @@ function Orgnization() {
             <Text fontSize="2xl">{description[value]}</Text>
           </Center>
         </div>
+        <Center>
+          <Flex flexDir="column">
+            <Center>
+              <Heading size="xl" mt={10}>
+                Budget timeline
+              </Heading>
+            </Center>
+            <Chart type="line" series={series} options={options} width={600} />
+          </Flex>
+        </Center>
       </Flex>
     </Container>
   );
 }
 
-export { Orgnization };
+export { OrganizacionProfile };

@@ -2,15 +2,15 @@
 
 import { Route, Routes } from "react-router-dom";
 import { Home } from "./home/Home";
-import { Organizations } from "./organizations/Oranizations";
+import { Organizations } from "./organizations/Organizations";
 import { Profile } from "./profile/Profile";
-import { Orgnization } from "./indOrg";
+import { OrganizacionProfile } from "./organizations/[wallet]/OrganizationsProfile";
 
 const routes = [
   { path: "/home", Page: Home },
   { path: "/organizations", Page: Organizations },
+  { path: "/organizations/:id", Page: OrganizacionProfile },
   { path: "/profile", Page: Profile },
-  { path: "/org/id", Page: Orgnization },
 ];
 
 function Routing() {
