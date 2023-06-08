@@ -14,6 +14,8 @@ use primitive_types::H256;
 
 pub struct NFTMetadata;
 
+pub struc miMetaData;
+
 impl Metadata for NFTMetadata {
     type Init = In<InitNFT>;
     type Handle = InOut<NFTAction, NFTEvent>;
@@ -29,7 +31,7 @@ impl Metadata for NFTMetadata {
 pub enum NFTAction {
     Mint {
         transaction_id: u64,
-        token_metadata: TokenMetadata,
+        token_metadata: TokenMetadataMrJ,
     },
     Burn {
         transaction_id: u64,

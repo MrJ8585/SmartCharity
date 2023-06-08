@@ -15,6 +15,11 @@ pub struct Nft {
     pub transactions: HashMap<H256, NFTEvent>,
 }
 
+pub struc miMetaData {
+    #[NFTStateField]
+    pub token:
+}
+
 static mut CONTRACT: Option<Nft> = None;
 
 #[no_mangle]
@@ -151,12 +156,20 @@ unsafe extern "C" fn handle() {
     };
 }
 
+pub struct TokenMetadataMrJ {
+    pub name: String,
+    pub description: String,
+    pub image_url: String,
+    pub donacion: u128,
+    pub ong: String,
+}
+
 pub trait MyNFTCore: NFTCore {
-    fn mint(&mut self, token_metadata: TokenMetadata) -> NFTTransfer;
+    fn mint(&mut self, token_metadata: TokenMetadataMrJ) -> NFTTransfer;
 }
 
 impl MyNFTCore for Nft {
-    fn mint(&mut self, token_metadata: TokenMetadata) -> NFTTransfer {
+    fn mint(&mut self, token_metadata: TokenMetadataMrJ) -> NFTTransfer {
         let transfer = NFTCore::mint(self, &msg::source(), self.token_id, Some(token_metadata));
         self.token_id = self.token_id.saturating_add(U256::one());
         transfer
