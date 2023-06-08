@@ -112,7 +112,7 @@ function OrgnizationWWF() {
             {/* NFTS */}
             <Card>
               <CardBody>
-                <Heading size="md">NFTs</Heading>
+                <Heading size="md">FTs</Heading>
               </CardBody>
 
               <Box overflow="auto" maxHeight="400px">

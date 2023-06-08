@@ -29,7 +29,7 @@ import HorizontalTimeline from "react-horizontal-timeline";
 import { TransferButton } from "./Transfer";
 import Chart from "react-apexcharts";
 
-function OrgnizationCp() {
+function OrgnizationDsf() {
   const [value, setValue] = useState(0);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [previous, setPrevious] = useState(0);
@@ -59,7 +59,7 @@ function OrgnizationCp() {
       <Flex flexDir="column" my={4}>
         <Center>
           <Heading size="4xl" mb={2}>
-            4 Patas
+            Doctors Without Borders
           </Heading>
         </Center>
         <Flex>
@@ -67,7 +67,7 @@ function OrgnizationCp() {
             {/* Image and */}
             <Center>
               <Image
-                src="https://d3ugyf2ht6aenh.cloudfront.net/stores/188/849/themes/common/logo-1866482157-1574635760-6cf4fcbbca71b55a01145347adaf5bde1574635760.png?0"
+                src="https://www.sustainable.pitt.edu/wp-content/uploads/2022/02/doctors@2x.png"
                 alt="WWF"
               />
             </Center>
@@ -186,4 +186,4 @@ function OrgnizationCp() {
   );
 }
 
-export { OrgnizationCp };
+export { OrgnizationDsf };
