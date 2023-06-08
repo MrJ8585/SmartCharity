@@ -30,6 +30,7 @@ import HorizontalTimeline from "react-horizontal-timeline";
 import Chart from "react-apexcharts";
 import { TransferButton } from "./Transfer";
 import { useParams } from "react-router-dom";
+import axios from "axios";
 
 function OrganizacionProfile() {
   const [value, setValue] = useState(0);
@@ -37,6 +38,22 @@ function OrganizacionProfile() {
   const [previous, setPrevious] = useState(0);
   const [organization, setOrganization] = useState<any>({});
   const { id } = useParams();
+  const [totalDonaciones, setTotalDonaciones] = useState<any>(0);
+  const [donadores, setDonadores] = useState<string[]>([]);
+
+  const fetch = () => {
+    axios
+      .post(`localhost/donacion/company/wallet`, {
+        wallet: organization.wallet,
+      })
+      .then((res) => {
+        setTotalDonaciones(res.data.quantity);
+      });
+
+    axios.post("");
+  };
+
+  useEffect(() => {});
 
   useEffect(() => {
     setOrganization(organizations.find((org) => org.wallet === id));
@@ -88,7 +105,7 @@ function OrganizacionProfile() {
                       Total Donaciones
                     </Heading>
                     <Text pt="2" fontSize="sm" color="green">
-                      $1,500,200
+                      ${totalDonaciones}
                     </Text>
                   </Box>
                   <Box>
