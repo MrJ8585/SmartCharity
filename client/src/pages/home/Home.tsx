@@ -16,6 +16,7 @@ import {
 import whiteLogo from "../../assets/images/logoBlack.png";
 import blueLogo from "../../assets/images/logoBlue.png";
 import { organizations } from "pages/organizations/Organizations";
+import { Link } from "react-router-dom";
 
 type FeatureProps = {
   imageSrc: string;
@@ -49,18 +50,26 @@ function Feature({ imageSrc, title, content }: FeatureProps) {
 type OrganizationProps = {
   title: string;
   imageSrc: string;
+  wallet: string;
 };
 
-function Organization({ title, imageSrc }: OrganizationProps) {
+function Organization({ title, imageSrc, wallet }: OrganizationProps) {
   return (
-    <Card w="300px">
-      <CardBody>
-        <Flex align="center" gap="10px">
-          <Image src={imageSrc} boxSize="50px" borderRadius="full" />
-          <Text fontSize="lg">{title}</Text>
-        </Flex>
-      </CardBody>
-    </Card>
+    <Link to={`/organizations/${wallet}`}>
+      <Card w="300px">
+        <CardBody>
+          <Flex align="center" gap="10px">
+            <Image
+              src={imageSrc}
+              boxSize="50px"
+              borderRadius="full"
+              objectFit="cover"
+            />
+            <Text fontSize="lg">{title}</Text>
+          </Flex>
+        </CardBody>
+      </Card>
+    </Link>
   );
 }
 
@@ -119,15 +128,17 @@ function Home() {
     <Container w="90%" maxW="container.xl">
       <Flex alignItems="center" justifyContent="center" padding="4em" gap="4em">
         <Image src={img} fit="cover" boxSize="-moz-fit-content" width="260px" />
-        <Stack w="400px">
+        <VStack w="400px">
           <Text fontSize="4xl" align="center" fontWeight="bold">
             Your charity is safe with SmartCharity
           </Text>
-          <Button maxW="-moz-fit-content" background={bgColor} color="white">
-            Connect your wallet!
-            <AttachmentIcon marginLeft="10px" />
-          </Button>
-        </Stack>
+          <Link to="/organizations">
+            <Button maxW="-moz-fit-content" background={bgColor} color="white">
+              Look at our ONGs
+              <AttachmentIcon marginLeft="10px" />
+            </Button>
+          </Link>
+        </VStack>
       </Flex>
       <VStack
         background={bgColor}
@@ -148,10 +159,12 @@ function Home() {
             />
           ))}
         </Flex>
-        <Button paddingX="100px" background={bg} alignItems="center">
-          Learn more
-          <InfoIcon marginLeft="10px" />
-        </Button>
+        <Link to="https://es.wikipedia.org/wiki/Organizaci%C3%B3n_no_gubernamental">
+          <Button paddingX="100px" background={bg} alignItems="center">
+            Learn more
+            <InfoIcon marginLeft="10px" />
+          </Button>
+        </Link>
       </VStack>
       <VStack align="start" paddingX="10px" paddingY="20px">
         <Text fontSize="3xl" fontWeight="bold">
@@ -161,6 +174,7 @@ function Home() {
           {organizations.map((organization) => (
             <Organization
               title={organization.title}
+              wallet={organization.wallet}
               imageSrc={organization.img}
             />
           ))}
