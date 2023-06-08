@@ -3,6 +3,9 @@
   "version": "0.1.1",
   "private": true,
   "dependencies": {
+    "@chakra-ui/react": "^2.7.0",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
     "@gear-js/api": "0.31.2",
     "@gear-js/react-hooks": "0.5.18",
     "@gear-js/ui": "0.5.19",
@@ -23,6 +26,7 @@
     "assert": "2.0.0",
     "buffer": "6.0.3",
     "clsx": "1.2.1",
+    "framer-motion": "^10.12.16",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-router-dom": "6.10.0",
