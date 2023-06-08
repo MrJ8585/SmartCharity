@@ -8,6 +8,7 @@ interface Props {
   to: string;
   amount: number;
   onClose: () => void;
+  fetch: (wallet: any) => void;
 }
 
 function TransferButton(props: Props) {
@@ -83,6 +84,7 @@ function TransferButton(props: Props) {
                 duration: 9000,
                 isClosable: true,
               });
+              props.fetch(props.to);
               // alert.success(`Block hash #${status.asInBlock.toString()}`);
             } else {
               if (status.type === "Finalized") {

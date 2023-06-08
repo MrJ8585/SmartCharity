@@ -15,6 +15,7 @@ import {
 } from "@chakra-ui/react";
 import whiteLogo from "../../assets/images/logoBlack.png";
 import blueLogo from "../../assets/images/logoBlue.png";
+import { organizations } from "pages/organizations/Organizations";
 
 type FeatureProps = {
   imageSrc: string;
@@ -84,29 +85,29 @@ const features = [
   },
 ];
 
-const organizations = [
-  {
-    title: "CETYS Universidad",
-    imageSrc:
-      "https://static-00.iconduck.com/assets.00/coinbase-icon-512x512-rgejvkzh.png",
-  },
-  { title: "ONG 2", imageSrc: "https://bit.ly/3qBf6gB" },
-  {
-    title: "CETYS Universidad",
-    imageSrc:
-      "https://static-00.iconduck.com/assets.00/coinbase-icon-512x512-rgejvkzh.png",
-  },
-  {
-    title: "CETYS Universidad",
-    imageSrc:
-      "https://static-00.iconduck.com/assets.00/coinbase-icon-512x512-rgejvkzh.png",
-  },
-  {
-    title: "CETYS Universidad",
-    imageSrc:
-      "https://static-00.iconduck.com/assets.00/coinbase-icon-512x512-rgejvkzh.png",
-  },
-];
+// const organizations = [
+//   {
+//     title: "CETYS Universidad",
+//     imageSrc:
+//       "https://static-00.iconduck.com/assets.00/coinbase-icon-512x512-rgejvkzh.png",
+//   },
+//   { title: "ONG 2", imageSrc: "https://bit.ly/3qBf6gB" },
+//   {
+//     title: "CETYS Universidad",
+//     imageSrc:
+//       "https://static-00.iconduck.com/assets.00/coinbase-icon-512x512-rgejvkzh.png",
+//   },
+//   {
+//     title: "CETYS Universidad",
+//     imageSrc:
+//       "https://static-00.iconduck.com/assets.00/coinbase-icon-512x512-rgejvkzh.png",
+//   },
+//   {
+//     title: "CETYS Universidad",
+//     imageSrc:
+//       "https://static-00.iconduck.com/assets.00/coinbase-icon-512x512-rgejvkzh.png",
+//   },
+// ];
 
 function Home() {
   //zod
@@ -160,7 +161,7 @@ function Home() {
           {organizations.map((organization) => (
             <Organization
               title={organization.title}
-              imageSrc={organization.imageSrc}
+              imageSrc={organization.img}
             />
           ))}
         </Flex>
