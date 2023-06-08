@@ -1,3 +1,4 @@
+import { AttachmentIcon, InfoIcon } from "@chakra-ui/icons";
 import {
   Box,
   Container,
@@ -10,6 +11,7 @@ import {
   Card,
   CardBody,
   VStack,
+  useColorModeValue,
 } from "@chakra-ui/react";
 
 type FeatureProps = {
@@ -99,32 +101,35 @@ const organizations = [
 ];
 
 function Home() {
+  const bgColor = useColorModeValue("#37a0ea", "#117bc4");
+  const bg = useColorModeValue("white", "#2d3748");
+
   return (
-    <Container w="90%" maxW="container.xl" color="black">
+    <Container w="90%" maxW="container.xl">
       <Flex alignItems="center" justifyContent="center">
         <Image
           src="https://i.imgur.com/LcrmL8F.png"
           fit="cover"
           boxSize="500px"
         />
-        <Stack border="px" w="400px">
+        <Stack w="400px">
           <Text fontSize="4xl" align="center" fontWeight="bold">
             Your charity is safe with SmartCharity
           </Text>
-          <Button maxW="-moz-fit-content" background="#37a0ea" color="white">
-            Sign up now!
+          <Button maxW="-moz-fit-content" background={bgColor} color="white">
+            Connect your wallet!
+            <AttachmentIcon marginLeft="10px" />
           </Button>
         </Stack>
       </Flex>
       <VStack
-        border="1px"
-        background="#37a0ea"
+        background={bgColor}
         padding="2em"
         color="white"
         gap="20px"
+        borderRadius="2em"
       >
         <Text fontSize="2xl" fontWeight="bold">
-          {" "}
           Explore all our Features
         </Text>
         <Flex gap="20px">
@@ -136,12 +141,15 @@ function Home() {
             />
           ))}
         </Flex>
-        <Button background="white" paddingX="100px">
+        <Button paddingX="100px" background={bg} alignItems="center">
           Learn more
+          <InfoIcon marginLeft="10px" />
         </Button>
       </VStack>
       <VStack align="start" paddingX="10px" paddingY="20px">
-        <Text fontSize="3xl">Trending organizations</Text>
+        <Text fontSize="3xl" fontWeight="bold">
+          Trending organizations
+        </Text>
         <Flex gap="20px" maxW="full" flexWrap="wrap">
           {organizations.map((organization) => (
             <Organization

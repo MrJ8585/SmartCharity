@@ -5,9 +5,17 @@ import {
   Center,
   ButtonGroup,
   Button,
+  useColorMode,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { Link, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
+import {
+  MoonIcon,
+  CalendarIcon,
+  HamburgerIcon,
+  AtSignIcon,
+} from "@chakra-ui/icons";
 import { Account } from "./account";
 // Kaiku Manga
 
@@ -17,25 +25,29 @@ type Props = {
   isAccountVisible: boolean;
 };
 
-function HeaderBtn({ title, route, selected }: any) {
+function HeaderBtn({ title, route, selected, icon }: any) {
   return (
-    <Button
-      variant="outline"
-      background={selected ? "#37a0ea" : ""}
-      color={selected ? "white" : "black"}
-    >
-      <Link to={route}>{title}</Link>
-    </Button>
+    <Link to={route}>
+      <Button
+        variant="outline"
+        background={selected ? "#37a0ea" : ""}
+        color={selected ? "white" : ""}
+      >
+        {icon}
+        <Text marginLeft="5px">{title}</Text>
+      </Button>
+    </Link>
   );
 }
 
 function Header({ isAccountVisible }: Props) {
+  const { toggleColorMode } = useColorMode();
   const [selectedPage, setSelectedPage] = useState<Pages>("home");
   const location = useLocation();
+  const bottomBorder = useColorModeValue("#e2e8f0", "#e2e8f0");
 
   useEffect(() => {
     const url = location.pathname;
-    console.log(url);
     if (url.includes("home")) {
       setSelectedPage("home");
     } else if (url.includes("organizations")) {
@@ -44,16 +56,9 @@ function Header({ isAccountVisible }: Props) {
       setSelectedPage("profile");
     }
   }, [location]);
-  console.log(window.location.href);
 
   return (
-    <Flex
-      background="white"
-      padding="10px 30px"
-      borderBottom="1px"
-      borderColor="gray.200"
-      color="black"
-    >
+    <Flex padding="10px 30px" borderBottom="1px" borderColor={bottomBorder}>
       <Center>
         <Text fontSize="3xl" color="#37a0ea" fontWeight="bold">
           SmartCharity
@@ -65,21 +70,27 @@ function Header({ isAccountVisible }: Props) {
           <HeaderBtn
             title="Home"
             route="/home"
+            icon={<CalendarIcon />}
             selected={selectedPage === "home"}
           />
           <HeaderBtn
             title="Organizations"
             route="/organizations"
+            icon={<HamburgerIcon />}
             selected={selectedPage === "organizations"}
           />
           <HeaderBtn
             title="Profile"
             route="/profile"
+            icon={<AtSignIcon />}
             selected={selectedPage === "profile"}
           />
         </ButtonGroup>
       </Center>
       <Spacer />
+      <Button onClick={toggleColorMode} marginRight="1em">
+        <MoonIcon />
+      </Button>
       {isAccountVisible && <Account />}
     </Flex>
   );
